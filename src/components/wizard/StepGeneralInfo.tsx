@@ -58,7 +58,7 @@ export default function StepGeneralInfo({
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
+        <h2 className="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
           <HardHat className="h-5 w-5 text-amber-500" />
           1. Información General
         </h2>
@@ -77,7 +77,7 @@ export default function StepGeneralInfo({
                 setFecha(e.target.value);
                 triggerSaveDraft(e.target.value);
               }}
-              className="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 rounded-lg text-sm text-slate-900 shadow-sm"
+              className="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 rounded-lg text-base sm:text-sm text-slate-900 shadow-sm"
             />
           </div>
           
@@ -92,7 +92,7 @@ export default function StepGeneralInfo({
                 setCapataz(e.target.value);
                 triggerSaveDraft(fecha, e.target.value);
               }}
-              className="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 rounded-lg text-sm text-slate-900 shadow-sm"
+              className="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 rounded-lg text-base sm:text-sm text-slate-900 shadow-sm"
             />
             {historicalCapataces.length > 0 && (
               <div className="flex flex-wrap gap-1 mt-1.5">
@@ -126,7 +126,7 @@ export default function StepGeneralInfo({
               setFrenteTrabajo(e.target.value);
               triggerSaveDraft(fecha, capataz, e.target.value);
             }}
-            className="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 rounded-lg text-sm text-slate-900 shadow-sm"
+            className="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 rounded-lg text-base sm:text-sm text-slate-900 shadow-sm"
           />
           {historicalFrentes.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-1.5">

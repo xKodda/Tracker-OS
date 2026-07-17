@@ -103,6 +103,28 @@ export function useReports() {
     return Array.from(workers);
   };
 
+  // Obtener lista de trabajadores filtrados por capataz (cuadrilla histórica)
+  const getHistoricalWorkersByCapataz = (capatazName: string): string[] => {
+    if (!capatazName || !capatazName.trim()) return getHistoricalWorkers();
+    const workers = new Set<string>();
+    const normalizedCapataz = capatazName.trim().toLowerCase();
+    
+    reports.forEach((report) => {
+      if (report.capataz && report.capataz.trim().toLowerCase() === normalizedCapataz) {
+        if (report.recursos?.manoObra) {
+          report.recursos.manoObra.forEach((mo) => {
+            if (mo.nombre?.trim()) workers.add(mo.nombre.trim());
+          });
+        }
+      }
+    });
+
+    if (workers.size === 0) {
+      return getHistoricalWorkers();
+    }
+    return Array.from(workers);
+  };
+
   // Obtener lista única de maquinarias históricas
   const getHistoricalMachines = (): string[] => {
     const machines = new Set<string>();
@@ -143,6 +165,7 @@ export function useReports() {
     saveReport,
     deleteReport,
     historicalWorkers: getHistoricalWorkers(),
+    getWorkersByCapataz: getHistoricalWorkersByCapataz,
     historicalMachines: getHistoricalMachines(),
     historicalCapataces: getHistoricalCapataces(),
     historicalFrentes: getHistoricalFrentes(),

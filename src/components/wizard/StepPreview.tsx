@@ -21,7 +21,7 @@ export default function StepPreview({
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
+        <h2 className="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
           <Send className="h-5 w-5 text-emerald-600" />
           5. Resumen y Envío
         </h2>
@@ -35,7 +35,7 @@ export default function StepPreview({
             <button
               type="button"
               onClick={handleCopyText}
-              className="w-full sm:w-auto justify-center text-xs font-bold px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-lg flex items-center gap-1 active:scale-[0.98] transition-all"
+              className="w-full sm:w-auto justify-center text-xs font-bold px-2.5 py-1.5 bg-slate-105 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-lg flex items-center gap-1 active:scale-[0.98] transition-all"
             >
               {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5 text-slate-500" />}
               {copied ? "COPIADO" : "COPIAR TEXTO"}
@@ -78,10 +78,10 @@ export default function StepPreview({
         <button
           type="button"
           onClick={handleSendWhatsApp}
-          className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-sm shadow-md flex items-center justify-center gap-2 group transition-all uppercase tracking-wider"
+          className="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-sm shadow-md flex items-center justify-center gap-2 group transition-all uppercase tracking-wider whitespace-normal text-center"
         >
-          <Send className="h-5 w-5" />
-          Enviar a WhatsApp del Secretario Técnico
+          <Send className="h-5 w-5 flex-shrink-0" />
+          <span>Enviar a WhatsApp del Secretario Técnico</span>
         </button>
       </div>
     </div>

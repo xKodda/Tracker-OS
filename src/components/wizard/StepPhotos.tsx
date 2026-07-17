@@ -17,7 +17,7 @@ export default function StepPhotos({
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
+        <h2 className="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
           <Camera className="h-5 w-5 text-amber-500" />
           4. Fotografías de Avance
         </h2>
@@ -25,7 +25,7 @@ export default function StepPhotos({
       </div>
 
       <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
-        <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 p-6 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 text-center hover:border-slate-400 transition-colors">
+        <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 p-6 border-2 border-dashed border-slate-300 rounded-xl bg-slate-55 text-center hover:border-slate-400 transition-colors">
           <label className="cursor-pointer justify-center bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
             <Camera className="h-4 w-4 text-amber-500" /> Tomar Fotos (Cámara)
             <input
@@ -59,7 +59,7 @@ export default function StepPhotos({
                   <button
                     type="button"
                     onClick={() => removePhoto(f.id)}
-                    className="absolute top-2 right-2 p-1.5 bg-slate-900/80 hover:bg-red-600 text-slate-200 hover:text-white rounded-lg transition-colors border border-slate-700"
+                    className="absolute top-2 right-2 p-1.5 bg-slate-900/80 hover:bg-red-650 text-slate-200 hover:text-white rounded-lg transition-colors border border-slate-700"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -73,7 +73,7 @@ export default function StepPhotos({
                       placeholder="Ej: PK 12+350 o Frente Norte"
                       value={f.pk || ""}
                       onChange={(e) => updatePhotoDesc(f.id, "pk", e.target.value)}
-                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900"
+                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-900 focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
                     />
                   </div>
                   <div className="space-y-1">
@@ -83,7 +83,7 @@ export default function StepPhotos({
                       placeholder="Ej: Terminación de excavación canal"
                       value={f.descripcion}
                       onChange={(e) => updatePhotoDesc(f.id, "descripcion", e.target.value)}
-                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900"
+                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-900 focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
                     />
                   </div>
                 </div>

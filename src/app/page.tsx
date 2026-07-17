@@ -32,10 +32,10 @@ export default function Dashboard() {
               <HardHat className="h-6 w-6 text-slate-950" />
             </div>
             <div>
-              <h1 className="text-xl font-black tracking-tight text-white">
+              <h1 className="text-lg sm:text-xl font-black tracking-tight text-white leading-none">
                 Obra-OS
               </h1>
-              <p className="text-xs text-amber-400 font-bold uppercase tracking-wider">Control de Maquinaria y Obra</p>
+              <p className="text-[9px] sm:text-xs text-amber-400 font-bold uppercase tracking-wider mt-1">Control de Maquinaria y Obra</p>
             </div>
           </div>
           <div className="flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-md bg-emerald-900 text-emerald-300 border border-emerald-700">

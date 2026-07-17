@@ -22,6 +22,7 @@ export default function NuevoReporte() {
     saveDraft, 
     saveReport, 
     historicalWorkers,
+    getWorkersByCapataz,
     historicalMachines,
     historicalCapataces,
     historicalFrentes
@@ -84,6 +85,14 @@ export default function NuevoReporte() {
     newFotos = fotosAvance
   ) => {
     if (!newFecha) return;
+    const sanitizedActs = newActs.map(act => ({ ...act, horas: (act.horas as any) === "" ? 0 : (Number(act.horas) || 0) }));
+    const sanitizedMo = newMo.map(mo => ({ ...mo, horas: (mo.horas as any) === "" ? 0 : (Number(mo.horas) || 0) }));
+    const sanitizedMaq = newMaq.map(maq => ({
+      ...maq,
+      horasOperativas: (maq.horasOperativas as any) === "" ? 0 : (Number(maq.horasOperativas) || 0),
+      horasStandby: (maq.horasStandby as any) === "" ? 0 : (Number(maq.horasStandby) || 0)
+    }));
+
     const updatedDraft: DailyReport = {
       id,
       fecha: newFecha,
@@ -91,10 +100,10 @@ export default function NuevoReporte() {
       frenteTrabajo: newFrente,
       hptPhoto: newHpt,
       hptPhotoName: newHptName,
-      actividades: newActs,
+      actividades: sanitizedActs,
       recursos: {
-        manoObra: newMo,
-        maquinaria: newMaq
+        manoObra: sanitizedMo,
+        maquinaria: sanitizedMaq
       },
       fotosAvance: newFotos,
       createdAt: new Date().toISOString(),
@@ -285,6 +294,14 @@ export default function NuevoReporte() {
       return;
     }
 
+    const sanitizedActs = actividades.map(act => ({ ...act, horas: (act.horas as any) === "" ? 0 : (Number(act.horas) || 0) }));
+    const sanitizedMo = manoObra.map(mo => ({ ...mo, horas: (mo.horas as any) === "" ? 0 : (Number(mo.horas) || 0) }));
+    const sanitizedMaq = maquinaria.map(maq => ({
+      ...maq,
+      horasOperativas: (maq.horasOperativas as any) === "" ? 0 : (Number(maq.horasOperativas) || 0),
+      horasStandby: (maq.horasStandby as any) === "" ? 0 : (Number(maq.horasStandby) || 0)
+    }));
+
     const report: DailyReport = {
       id,
       fecha,
@@ -292,10 +309,10 @@ export default function NuevoReporte() {
       frenteTrabajo,
       hptPhoto,
       hptPhotoName,
-      actividades,
+      actividades: sanitizedActs,
       recursos: {
-        manoObra,
-        maquinaria
+        manoObra: sanitizedMo,
+        maquinaria: sanitizedMaq
       },
       fotosAvance,
       createdAt: new Date().toISOString(),
@@ -321,7 +338,7 @@ export default function NuevoReporte() {
           >
             <ArrowLeft className="h-4 w-4 text-amber-500" /> PANEL PRINCIPAL
           </button>
-          <span className="text-sm font-black uppercase tracking-wider text-slate-200">REGISTRO DE CIERRE DIARIO</span>
+          <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-200">REGISTRO DE CIERRE DIARIO</span>
           <span className="text-xs font-extrabold text-amber-400 bg-slate-800 px-2 py-1 rounded border border-slate-700">PASO {step}/5</span>
         </div>
       </header>
@@ -374,7 +391,7 @@ export default function NuevoReporte() {
             addMachine={addMachine}
             updateMachine={updateMachine}
             removeMachine={removeMachine}
-            historicalWorkers={historicalWorkers}
+            historicalWorkers={getWorkersByCapataz ? getWorkersByCapataz(capataz) : historicalWorkers}
             historicalMachines={historicalMachines}
           />
         )}

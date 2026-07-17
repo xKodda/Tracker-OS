@@ -49,7 +49,7 @@ export default function StepResources({
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
+        <h2 className="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
           <HardHat className="h-5 w-5 text-amber-500" />
           3. Operarios y Maquinarias
         </h2>
@@ -95,14 +95,14 @@ export default function StepResources({
                   {workersForAct.length > 0 && (
                     <div className="space-y-2">
                       {workersForAct.map((mo) => (
-                        <div key={mo.id} className="grid grid-cols-6 md:grid-cols-12 gap-2.5 sm:gap-3 items-center bg-slate-50 p-3 rounded-lg border border-slate-200">
+                        <div key={mo.id} className="grid grid-cols-6 md:grid-cols-12 gap-2.5 sm:gap-3 items-center bg-slate-55 p-3 rounded-lg border border-slate-200">
                           <div className="col-span-4 md:col-span-6 space-y-1">
                             <input
                               type="text"
                               placeholder="Nombre del operario"
                               value={mo.nombre}
                               onChange={(e) => updateWorker(mo.id, "nombre", e.target.value)}
-                              className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900"
+                              className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-900 focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
                             />
                             {historicalWorkers.length > 0 && (
                               <div className="flex flex-wrap gap-1 mt-1">
@@ -123,12 +123,12 @@ export default function StepResources({
                           <div className="col-span-2 md:col-span-2">
                             <input
                               type="number"
-                              min="0.5"
+                              min="0"
                               step="0.5"
                               placeholder="HH"
                               value={mo.horas}
-                              onChange={(e) => updateWorker(mo.id, "horas", parseFloat(e.target.value) || 0)}
-                              className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900 text-center"
+                              onChange={(e) => updateWorker(mo.id, "horas", e.target.value === "" ? "" : (parseFloat(e.target.value) || 0))}
+                              className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-900 text-center focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
                             />
                           </div>
                           <div className="col-span-5 md:col-span-3">
@@ -137,7 +137,7 @@ export default function StepResources({
                               placeholder="Nota / Actividad"
                               value={mo.justificacion || ""}
                               onChange={(e) => updateWorker(mo.id, "justificacion", e.target.value)}
-                              className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-800"
+                              className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-800 focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
                             />
                           </div>
                           <div className="col-span-1 md:col-span-1 flex justify-center">
@@ -190,7 +190,7 @@ export default function StepResources({
                                   placeholder="Código / Descripción (Ej: EX-05, CAT-02)"
                                   value={maq.codigo}
                                   onChange={(e) => updateMachine(maq.id, "codigo", e.target.value)}
-                                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-xs text-slate-900 font-bold"
+                                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-900 font-bold focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
                                 />
                                 <div className="flex flex-wrap gap-1 mt-1">
                                   {MAQUINARIA_PRESETS.slice(0, 3).map((pType) => (
@@ -236,8 +236,8 @@ export default function StepResources({
                                         step="0.5"
                                         placeholder="Op"
                                         value={maq.horasOperativas}
-                                        onChange={(e) => updateMachine(maq.id, "horasOperativas", parseFloat(e.target.value) || 0)}
-                                        className="w-full sm:w-16 px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900 text-center font-bold"
+                                        onChange={(e) => updateMachine(maq.id, "horasOperativas", e.target.value === "" ? "" : (parseFloat(e.target.value) || 0))}
+                                        className="w-full sm:w-16 px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-900 text-center font-bold focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
                                       />
                                     </div>
                                   </div>
@@ -251,8 +251,8 @@ export default function StepResources({
                                         step="0.5"
                                         placeholder="Stby"
                                         value={maq.horasStandby}
-                                        onChange={(e) => updateMachine(maq.id, "horasStandby", parseFloat(e.target.value) || 0)}
-                                        className="w-full sm:w-16 px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900 text-center font-bold"
+                                        onChange={(e) => updateMachine(maq.id, "horasStandby", e.target.value === "" ? "" : (parseFloat(e.target.value) || 0))}
+                                        className="w-full sm:w-16 px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-900 text-center font-bold focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
                                       />
                                     </div>
                                   </div>
@@ -310,9 +310,9 @@ export default function StepResources({
                                     placeholder="Escribe la justificación manualmente..."
                                     value={maq.justificacion === "Otro" ? "" : maq.justificacion || ""}
                                     onChange={(e) => updateMachine(maq.id, "justificacion", e.target.value)}
-                                    className={`w-full px-3 py-1.5 bg-white border rounded-md text-xs text-slate-900 focus:ring-1 transition-all ${
+                                    className={`w-full px-3 py-1.5 bg-white border rounded-md text-base sm:text-xs text-slate-900 focus:ring-1 transition-all ${
                                       isJustificationMissing 
-                                        ? 'border-amber-500 focus:border-amber-650 focus:ring-amber-500' 
+                                        ? 'border-amber-500 focus:border-amber-650 focus:ring-amber-550' 
                                         : 'border-slate-300 focus:border-slate-500 focus:ring-slate-500'
                                     }`}
                                   />

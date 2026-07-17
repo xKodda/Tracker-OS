@@ -65,13 +65,13 @@ export default function Dashboard() {
             href="/nuevo"
             className="group relative rounded-xl border-2 border-slate-200 bg-white p-6 flex items-center justify-between shadow-sm hover:border-amber-500 hover:shadow-md transition-all duration-200 active:scale-[0.99]"
           >
-            <div className="flex items-center gap-4">
-              <div className="bg-amber-500 p-3.5 rounded-xl text-slate-950 shadow-md group-hover:scale-105 transition-transform">
+            <div className="flex items-center gap-4 flex-1 min-w-0">
+              <div className="bg-amber-500 p-3.5 rounded-xl text-slate-950 shadow-md group-hover:scale-105 transition-transform flex-shrink-0">
                 <Plus className="h-6 w-6" />
               </div>
-              <div className="space-y-1">
-                <h2 className="text-lg font-black text-slate-900 group-hover:text-amber-600 transition-colors uppercase tracking-tight">Crear Reporte Diario</h2>
-                <p className="text-xs text-slate-550 max-w-sm">Registra actividades, distribuye horas de maquinaria/operarios y genera el mensaje de WhatsApp.</p>
+              <div className="space-y-1 flex-1 min-w-0">
+                <h2 className="text-base sm:text-lg font-black text-slate-900 group-hover:text-amber-600 transition-colors uppercase tracking-tight truncate">Crear Reporte Diario</h2>
+                <p className="text-xs text-slate-500 max-w-sm truncate sm:whitespace-normal">Registra actividades, distribuye horas de maquinaria/operarios y genera el mensaje de WhatsApp.</p>
               </div>
             </div>
             <ChevronRight className="h-6 w-6 text-slate-400 group-hover:text-amber-500 group-hover:translate-x-1 transition-all" />

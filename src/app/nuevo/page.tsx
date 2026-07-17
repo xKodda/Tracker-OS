@@ -407,24 +407,27 @@ export default function NuevoReporte() {
       </main>
 
       {/* Footer Fijo */}
-      <footer className="fixed bottom-0 left-0 right-0 border-t border-slate-200 bg-white py-4 px-4 sm:px-6 z-40 shadow-lg">
-        <div className="max-w-3xl mx-auto flex items-center justify-between gap-3">
+      <footer className="fixed bottom-0 left-0 right-0 border-t border-slate-200 bg-white py-3 px-3 sm:px-6 sm:py-4 z-40 shadow-lg">
+        <div className="max-w-3xl mx-auto flex items-center justify-between gap-2 sm:gap-3">
           <button
             type="button"
             disabled={step === 1}
             onClick={() => setStep(step - 1)}
-            className="px-4 py-2.5 bg-white hover:bg-slate-55 text-slate-700 rounded-lg text-xs font-bold border border-slate-300 disabled:opacity-0 transition-all flex items-center gap-1 uppercase"
+            className="px-2.5 py-2 sm:px-4 sm:py-2.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-bold border border-slate-300 disabled:opacity-0 transition-all flex items-center gap-1 uppercase"
           >
-            <ArrowLeft className="h-4 w-4" /> Anterior
+            <ArrowLeft className="h-4 w-4" /> 
+            <span className="hidden sm:inline">Anterior</span>
           </button>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <button
               type="button"
               onClick={triggerSaveDraft as any}
-              className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold border border-slate-300 transition-all flex items-center gap-1.5 uppercase"
+              className="px-2.5 py-2 sm:px-4 sm:py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold border border-slate-300 transition-all flex items-center gap-1.5 uppercase"
             >
-              <Save className="h-4 w-4 text-amber-500" /> Guardar Borrador
+              <Save className="h-4 w-4 text-amber-500" /> 
+              <span className="hidden sm:inline">Guardar Borrador</span>
+              <span className="inline sm:hidden">Guardar</span>
             </button>
             
             {step < 5 ? (
@@ -448,17 +451,21 @@ export default function NuevoReporte() {
                   }
                   setStep(step + 1);
                 }}
-                className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-bold shadow flex items-center gap-1 uppercase"
+                className="px-2.5 py-2 sm:px-4 sm:py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-bold shadow flex items-center gap-1 uppercase"
               >
-                Siguiente <ArrowRight className="h-4 w-4 text-amber-500" />
+                <span className="hidden sm:inline">Siguiente</span>
+                <span className="inline sm:hidden">Sig.</span>
+                <ArrowRight className="h-4 w-4 text-amber-500" />
               </button>
             ) : (
               <button
                 type="button"
                 onClick={handleFinalize}
-                className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-black shadow flex items-center gap-1.5 uppercase tracking-wider"
+                className="px-2.5 py-2 sm:px-4 sm:py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-black shadow flex items-center gap-1.5 uppercase tracking-wider"
               >
-                <Check className="h-4 w-4" /> Finalizar y Guardar
+                <Check className="h-4 w-4" /> 
+                <span className="hidden sm:inline">Finalizar y Guardar</span>
+                <span className="inline sm:hidden">Finalizar</span>
               </button>
             )}
           </div>

@@ -16,12 +16,12 @@ export default function ReportCard({ report, onViewDetails, onDelete }: ReportCa
   return (
     <div className="group rounded-xl border border-slate-200 bg-white hover:border-slate-350 transition-all p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
       <div className="space-y-3 flex-1">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-1.5 text-xs font-extrabold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
             <Calendar className="h-3.5 w-3.5 text-slate-650" />
             <span>{report.fecha}</span>
           </div>
-          <div className="flex items-center gap-1 text-xs font-bold text-slate-700">
+          <div className="flex items-center gap-1 text-xs font-bold text-slate-750">
             <MapPin className="h-3.5 w-3.5 text-amber-500" />
             <span>{report.frenteTrabajo}</span>
           </div>

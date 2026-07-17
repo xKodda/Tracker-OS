@@ -30,12 +30,12 @@ export default function StepPreview({
 
       <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
         <div className="space-y-2">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <label className="text-xs font-extrabold text-slate-700 uppercase">Texto del Mensaje Generado</label>
             <button
               type="button"
               onClick={handleCopyText}
-              className="text-xs font-bold px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-lg flex items-center gap-1 active:scale-[0.98] transition-all"
+              className="w-full sm:w-auto justify-center text-xs font-bold px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-lg flex items-center gap-1 active:scale-[0.98] transition-all"
             >
               {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5 text-slate-500" />}
               {copied ? "COPIADO" : "COPIAR TEXTO"}

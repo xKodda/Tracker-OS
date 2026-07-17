@@ -67,14 +67,14 @@ export default function StepResources({
             const machinesForAct = maquinaria.filter((maq) => maq.actividadId === act.id);
 
             return (
-              <div key={act.id} className="p-5 rounded-xl border border-slate-200 bg-white space-y-5 shadow-sm">
+              <div key={act.id} className="p-4 sm:p-5 rounded-xl border border-slate-200 bg-white space-y-4 sm:space-y-5 shadow-sm">
                 {/* Cabecera Actividad */}
                 <div className="border-b border-slate-200 pb-3 flex items-center justify-between">
                   <div>
                     <h3 className="font-extrabold text-slate-900 text-sm">{act.descripcion || "Actividad sin descripción"}</h3>
                     <p className="text-xs text-slate-500 font-medium">Lugar: PK {act.pkInicio || 'N/A'} al PK {act.pkFin || 'N/A'}</p>
                   </div>
-                  <span className="text-[10px] font-extrabold px-2.5 py-1 bg-slate-105 text-slate-800 rounded border border-slate-200 uppercase tracking-wider">Actividad</span>
+                  <span className="text-[10px] font-extrabold px-2.5 py-1 bg-slate-100 text-slate-800 rounded border border-slate-200 uppercase tracking-wider">Actividad</span>
                 </div>
 
                 {/* Mano de Obra */}
@@ -95,8 +95,8 @@ export default function StepResources({
                   {workersForAct.length > 0 && (
                     <div className="space-y-2">
                       {workersForAct.map((mo) => (
-                        <div key={mo.id} className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-50 p-3 rounded-lg border border-slate-200">
-                          <div className="md:col-span-6 space-y-1">
+                        <div key={mo.id} className="grid grid-cols-6 md:grid-cols-12 gap-2.5 sm:gap-3 items-center bg-slate-50 p-3 rounded-lg border border-slate-200">
+                          <div className="col-span-4 md:col-span-6 space-y-1">
                             <input
                               type="text"
                               placeholder="Nombre del operario"
@@ -120,7 +120,7 @@ export default function StepResources({
                               </div>
                             )}
                           </div>
-                          <div className="md:col-span-2">
+                          <div className="col-span-2 md:col-span-2">
                             <input
                               type="number"
                               min="0.5"
@@ -131,7 +131,7 @@ export default function StepResources({
                               className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900 text-center"
                             />
                           </div>
-                          <div className="md:col-span-3">
+                          <div className="col-span-5 md:col-span-3">
                             <input
                               type="text"
                               placeholder="Nota / Actividad"
@@ -140,11 +140,11 @@ export default function StepResources({
                               className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-800"
                             />
                           </div>
-                          <div className="md:col-span-1 flex justify-center">
+                          <div className="col-span-1 md:col-span-1 flex justify-center">
                             <button
                               type="button"
                               onClick={() => removeWorker(mo.id)}
-                              className="text-slate-400 hover:text-red-600"
+                              className="text-slate-400 hover:text-red-655"
                             >
                               <Trash2 className="h-4 w-4" />
                             </button>
@@ -179,12 +179,12 @@ export default function StepResources({
                         return (
                           <div 
                             key={maq.id} 
-                            className={`p-3.5 rounded-lg border transition-all ${
+                            className={`p-3 sm:p-3.5 rounded-lg border transition-all ${
                               isJustificationMissing ? 'border-amber-400 bg-amber-50/40' : 'border-slate-200 bg-slate-50'
                             } space-y-3`}
                           >
-                            <div className="flex flex-wrap items-center gap-3">
-                              <div className="flex-1 min-w-[200px] space-y-1">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                              <div className="flex-1 min-w-0 space-y-1">
                                 <input
                                   type="text"
                                   placeholder="Código / Descripción (Ej: EX-05, CAT-02)"
@@ -192,9 +192,7 @@ export default function StepResources({
                                   onChange={(e) => updateMachine(maq.id, "codigo", e.target.value)}
                                   className="w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-xs text-slate-900 font-bold"
                                 />
-                                {/* Botones de sugerencias rápidas */}
                                 <div className="flex flex-wrap gap-1 mt-1">
-                                  {/* Presets */}
                                   {MAQUINARIA_PRESETS.slice(0, 3).map((pType) => (
                                     <button
                                       key={pType}
@@ -208,7 +206,6 @@ export default function StepResources({
                                       +{pType}
                                     </button>
                                   ))}
-                                  {/* Historial */}
                                   {historicalMachines.length > 0 && (
                                     <>
                                       <span className="text-[9px] text-slate-300 self-center">|</span>
@@ -226,37 +223,48 @@ export default function StepResources({
                                   )}
                                 </div>
                               </div>
-                              <div className="flex items-center gap-2">
-                                <label className="text-[10px] font-bold text-slate-550 uppercase">Horas Op:</label>
-                                <input
-                                  type="number"
-                                  min="0"
-                                  step="0.5"
-                                  placeholder="Op"
-                                  value={maq.horasOperativas}
-                                  onChange={(e) => updateMachine(maq.id, "horasOperativas", parseFloat(e.target.value) || 0)}
-                                  className="w-16 px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900 text-center font-bold"
-                                />
+                              
+                              <div className="flex items-end gap-3 w-full sm:w-auto">
+                                <div className="grid grid-cols-2 gap-2 flex-1 sm:flex-initial">
+                                  <div className="space-y-1">
+                                    <label className="text-[9px] font-bold text-slate-500 uppercase block sm:hidden">Horas Op</label>
+                                    <div className="flex items-center gap-1.5">
+                                      <label className="text-[10px] font-bold text-slate-555 uppercase hidden sm:block whitespace-nowrap">Horas Op:</label>
+                                      <input
+                                        type="number"
+                                        min="0"
+                                        step="0.5"
+                                        placeholder="Op"
+                                        value={maq.horasOperativas}
+                                        onChange={(e) => updateMachine(maq.id, "horasOperativas", parseFloat(e.target.value) || 0)}
+                                        className="w-full sm:w-16 px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900 text-center font-bold"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="space-y-1">
+                                    <label className="text-[9px] font-bold text-slate-500 uppercase block sm:hidden">Horas Stby</label>
+                                    <div className="flex items-center gap-1.5">
+                                      <label className="text-[10px] font-bold text-slate-555 uppercase hidden sm:block whitespace-nowrap">Horas Stby:</label>
+                                      <input
+                                        type="number"
+                                        min="0"
+                                        step="0.5"
+                                        placeholder="Stby"
+                                        value={maq.horasStandby}
+                                        onChange={(e) => updateMachine(maq.id, "horasStandby", parseFloat(e.target.value) || 0)}
+                                        className="w-full sm:w-16 px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900 text-center font-bold"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() => removeMachine(maq.id)}
+                                  className="text-slate-400 hover:text-red-655 p-2 border border-slate-200 hover:border-red-200 rounded-lg bg-white"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </button>
                               </div>
-                              <div className="flex items-center gap-2">
-                                <label className="text-[10px] font-bold text-slate-550 uppercase">Horas Stby:</label>
-                                <input
-                                  type="number"
-                                  min="0"
-                                  step="0.5"
-                                  placeholder="Stby"
-                                  value={maq.horasStandby}
-                                  onChange={(e) => updateMachine(maq.id, "horasStandby", parseFloat(e.target.value) || 0)}
-                                  className="w-16 px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900 text-center font-bold"
-                                />
-                              </div>
-                              <button
-                                type="button"
-                                onClick={() => removeMachine(maq.id)}
-                                className="text-slate-400 hover:text-red-650 ml-auto"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
                             </div>
 
                             {needsJustification && (

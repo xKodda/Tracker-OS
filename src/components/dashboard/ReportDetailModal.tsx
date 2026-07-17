@@ -28,7 +28,7 @@ export default function ReportDetailModal({ report, onClose }: ReportDetailModal
         
         <div className="p-6 overflow-y-auto space-y-6 text-sm text-slate-800">
           {/* Información General */}
-          <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
             <div>
               <span className="text-xs text-slate-500 font-bold uppercase block">Capataz</span>
               <span className="font-bold text-slate-900">{report.capataz}</span>
@@ -98,7 +98,7 @@ export default function ReportDetailModal({ report, onClose }: ReportDetailModal
           </div>
 
           {/* Archivos Cargados */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <h4 className="font-extrabold text-slate-900 border-b border-slate-200 pb-1 mb-2 uppercase tracking-tight text-xs text-slate-500">HPT Firmada</h4>
               {report.hptPhoto ? (

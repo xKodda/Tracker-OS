@@ -25,8 +25,8 @@ export default function StepPhotos({
       </div>
 
       <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
-        <div className="flex justify-center gap-3 p-6 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 text-center hover:border-slate-400 transition-colors">
-          <label className="cursor-pointer bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
+        <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 p-6 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 text-center hover:border-slate-400 transition-colors">
+          <label className="cursor-pointer justify-center bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
             <Camera className="h-4 w-4 text-amber-500" /> Tomar Fotos (Cámara)
             <input
               type="file"
@@ -37,7 +37,7 @@ export default function StepPhotos({
               className="hidden"
             />
           </label>
-          <label className="cursor-pointer bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
+          <label className="cursor-pointer justify-center bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
             <Upload className="h-4 w-4 text-slate-550" /> Seleccionar
             <input
               type="file"

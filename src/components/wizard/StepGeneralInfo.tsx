@@ -178,8 +178,8 @@ export default function StepGeneralInfo({
               </div>
             ) : (
               <div className="space-y-4">
-                <div className="flex justify-center gap-3">
-                  <label className="cursor-pointer bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
+                <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-3">
+                  <label className="cursor-pointer justify-center bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
                     <Camera className="h-4 w-4 text-amber-500" /> Tomar Foto HPT
                     <input
                       type="file"
@@ -189,7 +189,7 @@ export default function StepGeneralInfo({
                       className="hidden"
                     />
                   </label>
-                  <label className="cursor-pointer bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
+                  <label className="cursor-pointer justify-center bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
                     <Upload className="h-4 w-4 text-slate-500" /> Seleccionar
                     <input
                       type="file"

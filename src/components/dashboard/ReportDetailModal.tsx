@@ -66,8 +66,10 @@ export default function ReportDetailModal({ report, onClose }: ReportDetailModal
                 return (
                   <div key={mo.id} className="bg-slate-55 p-2.5 rounded-lg border border-slate-200">
                     <div className="flex justify-between items-center">
-                      <span className="font-bold text-slate-900">{mo.nombre}</span>
-                      <span className="text-xs font-bold text-slate-600 bg-white border border-slate-200 px-1.5 py-0.5 rounded">{mo.horas} hrs</span>
+                      <span className="font-bold text-slate-900">
+                        {mo.nombre} {mo.cargo && <span className="text-xs font-semibold text-slate-500 ml-1">({mo.cargo})</span>}
+                      </span>
+                      <span className="text-xs font-bold text-slate-650 bg-white border border-slate-200 px-1.5 py-0.5 rounded">{mo.horas} hrs</span>
                     </div>
                     <p className="text-xs text-slate-500 mt-1 font-medium">Actividad: {actName}</p>
                     {mo.justificacion && <p className="text-xs text-amber-700 mt-0.5 font-bold">Nota: {mo.justificacion}</p>}

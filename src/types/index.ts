@@ -11,6 +11,7 @@ export interface WorkerHours {
   nombre: string;
   horas: number;
   actividadId: string; // Relación con una actividad
+  cargo?: string; // Cargo/puesto del trabajador
   justificacion?: string;
 }
 

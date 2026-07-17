@@ -1,14 +1,24 @@
 import { HardHat, UserPlus, Trash2, Truck } from "lucide-react";
 import { Activity, WorkerHours, MachineHours } from "../../types";
 
+const CARGO_PRESETS = [
+  "Operador",
+  "Chofer",
+  "Jornal",
+  "Rigger",
+  "Ayudante",
+  "Capataz"
+];
+
 const MAQUINARIA_PRESETS = [
-  "Excavadora",
-  "Camión Tolva",
-  "Bulldozer",
-  "Motoniveladora",
-  "Rodillo Compactador",
-  "Retroexcavadora",
-  "Cargador Frontal",
+  "EX-01",
+  "CT-05",
+  "CT-06",
+  "BD-02",
+  "MOT-01",
+  "RC-03",
+  "RET-02",
+  "CF-01"
 ];
 
 const STANDBY_PRESETS = [
@@ -96,7 +106,7 @@ export default function StepResources({
                     <div className="space-y-2">
                       {workersForAct.map((mo) => (
                         <div key={mo.id} className="grid grid-cols-6 md:grid-cols-12 gap-2.5 sm:gap-3 items-center bg-slate-55 p-3 rounded-lg border border-slate-200">
-                          <div className="col-span-4 md:col-span-6 space-y-1">
+                          <div className="col-span-4 md:col-span-3 space-y-1">
                             <input
                               type="text"
                               placeholder="Nombre del operario"
@@ -120,6 +130,29 @@ export default function StepResources({
                               </div>
                             )}
                           </div>
+                          
+                          <div className="col-span-3 md:col-span-3 space-y-1">
+                            <input
+                              type="text"
+                              placeholder="Cargo (Ej: Operador, Chofer)"
+                              value={mo.cargo || ""}
+                              onChange={(e) => updateWorker(mo.id, "cargo", e.target.value)}
+                              className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-900 focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
+                            />
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {CARGO_PRESETS.slice(0, 3).map((cName) => (
+                                <button
+                                  key={cName}
+                                  type="button"
+                                  onClick={() => updateWorker(mo.id, "cargo", cName)}
+                                  className="px-1 py-0.5 bg-white hover:bg-slate-100 text-[9px] text-slate-550 border border-slate-200 rounded transition-colors font-medium"
+                                >
+                                  {cName}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+
                           <div className="col-span-2 md:col-span-2">
                             <input
                               type="number"
@@ -131,7 +164,8 @@ export default function StepResources({
                               className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-900 text-center focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
                             />
                           </div>
-                          <div className="col-span-5 md:col-span-3">
+                          
+                          <div className="col-span-2 md:col-span-3">
                             <input
                               type="text"
                               placeholder="Nota / Actividad"
@@ -140,11 +174,12 @@ export default function StepResources({
                               className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-800 focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
                             />
                           </div>
+                          
                           <div className="col-span-1 md:col-span-1 flex justify-center">
                             <button
                               type="button"
                               onClick={() => removeWorker(mo.id)}
-                              className="text-slate-400 hover:text-red-655"
+                              className="text-slate-400 hover:text-red-655 p-1"
                             >
                               <Trash2 className="h-4 w-4" />
                             </button>
@@ -193,22 +228,21 @@ export default function StepResources({
                                   className="w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-base sm:text-xs text-slate-900 font-bold focus:border-amber-550 focus:ring-1 focus:ring-amber-550"
                                 />
                                 <div className="flex flex-wrap gap-1 mt-1">
-                                  {MAQUINARIA_PRESETS.slice(0, 3).map((pType) => (
+                                  <span className="text-[9px] text-slate-500 font-bold self-center">Códigos:</span>
+                                  {MAQUINARIA_PRESETS.map((pCode) => (
                                     <button
-                                      key={pType}
+                                      key={pCode}
                                       type="button"
-                                      onClick={() => {
-                                        const count = maquinaria.filter(m => m.codigo.startsWith(pType)).length + 1;
-                                        updateMachine(maq.id, "codigo", `${pType} #${count}`);
-                                      }}
+                                      onClick={() => updateMachine(maq.id, "codigo", pCode)}
                                       className="px-1.5 py-0.5 bg-white hover:bg-slate-100 text-[9px] text-slate-600 border border-slate-200 rounded font-semibold"
                                     >
-                                      +{pType}
+                                      {pCode}
                                     </button>
                                   ))}
                                   {historicalMachines.length > 0 && (
                                     <>
                                       <span className="text-[9px] text-slate-300 self-center">|</span>
+                                      <span className="text-[9px] text-slate-500 font-bold self-center">Recientes:</span>
                                       {historicalMachines.slice(0, 3).map((mCode) => (
                                         <button
                                           key={mCode}

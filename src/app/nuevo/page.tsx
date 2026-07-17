@@ -155,6 +155,7 @@ export default function NuevoReporte() {
       id: Math.random().toString(36).substring(2, 9),
       nombre: "",
       horas: 8,
+      cargo: "",
       actividadId,
       justificacion: ""
     };

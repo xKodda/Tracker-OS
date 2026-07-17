@@ -24,8 +24,9 @@ export const generateWhatsAppText = (report: DailyReport): string => {
   if (report.recursos.manoObra.length === 0) text += `_Sin mano de obra registrada_\n`;
   report.recursos.manoObra.forEach((mo) => {
     const act = report.actividades.find(a => a.id === mo.actividadId)?.descripcion || 'Actividad';
+    const cargo = mo.cargo ? ` [${mo.cargo}]` : '';
     const just = mo.justificacion ? ` (Nota: ${mo.justificacion})` : '';
-    text += `- ${mo.nombre || 'Sin nombre'}: *${mo.horas} hrs* en "${act}"${just}\n`;
+    text += `- ${mo.nombre || 'Sin nombre'}${cargo}: *${mo.horas} hrs* en "${act}"${just}\n`;
   });
   text += `Total Horas Hombre: *${totalHoursMan} HH*\n\n`;
   

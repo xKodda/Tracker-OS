@@ -227,7 +227,6 @@ export default function NuevoReporte() {
 
   const removeActivity = (actId: string) => {
     const updatedActs = actividades.filter((act) => act.id !== actId);
-    // Eliminar también recursos asociados a esa actividad
     const updatedMo = manoObra.filter((mo) => mo.actividadId !== actId);
     const updatedMaq = maquinaria.filter((maq) => maq.actividadId !== actId);
     
@@ -447,9 +446,9 @@ export default function NuevoReporte() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-slate-950 text-slate-100 min-h-screen">
-      {/* Header Formulario */}
-      <header className="border-b border-slate-900 bg-slate-900/40 backdrop-blur-md sticky top-0 z-40 px-4 py-4 sm:px-6">
+    <div className="flex-1 flex flex-col bg-slate-100 text-slate-900 min-h-screen">
+      {/* Header Formulario - Estilo Industrial */}
+      <header className="bg-slate-900 text-white shadow px-4 py-4 sm:px-6 border-b-4 border-amber-500 sticky top-0 z-40">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <button 
             onClick={() => {
@@ -457,19 +456,19 @@ export default function NuevoReporte() {
                 router.push("/");
               }
             }}
-            className="flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-slate-200 transition-colors"
+            className="flex items-center gap-1 text-xs font-bold text-slate-400 hover:text-white transition-colors"
           >
-            <ArrowLeft className="h-4 w-4" /> Volver
+            <ArrowLeft className="h-4 w-4 text-amber-500" /> PANEL PRINCIPAL
           </button>
-          <span className="text-sm font-bold text-slate-200">Nuevo Cierre Diario</span>
-          <span className="text-xs font-semibold text-slate-500">Paso {step} de 5</span>
+          <span className="text-sm font-black uppercase tracking-wider text-slate-200">REGISTRO DE CIERRE DIARIO</span>
+          <span className="text-xs font-extrabold text-amber-400 bg-slate-800 px-2 py-1 rounded border border-slate-700">PASO {step}/5</span>
         </div>
       </header>
 
-      {/* Barra de progreso */}
-      <div className="w-full bg-slate-900 h-1">
+      {/* Barra de progreso de Alta Visibilidad */}
+      <div className="w-full bg-slate-200 h-1.5">
         <div 
-          className="bg-indigo-500 h-full transition-all duration-300"
+          className="bg-amber-500 h-full transition-all duration-300"
           style={{ width: `${(step / 5) * 100}%` }}
         ></div>
       </div>
@@ -481,17 +480,17 @@ export default function NuevoReporte() {
         {step === 1 && (
           <div className="space-y-6">
             <div className="space-y-1">
-              <h2 className="text-xl font-bold text-slate-150 flex items-center gap-2">
-                <HardHat className="h-5 w-5 text-indigo-400" />
-                Información General
+              <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
+                <HardHat className="h-5 w-5 text-amber-500" />
+                1. Información General
               </h2>
-              <p className="text-xs text-slate-400">Identifica la jornada y el frente de trabajo actual en terreno.</p>
+              <p className="text-xs text-slate-500 font-medium">Registra la fecha, capataz a cargo y el frente de trabajo.</p>
             </div>
 
-            <div className="space-y-4">
+            <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label htmlFor="fecha" className="text-xs font-semibold text-slate-400 block">Fecha</label>
+                  <label htmlFor="fecha" className="text-xs font-bold text-slate-700 uppercase block">Fecha de la Jornada</label>
                   <input
                     type="date"
                     id="fecha"
@@ -500,25 +499,26 @@ export default function NuevoReporte() {
                       setFecha(e.target.value);
                       triggerSaveDraft(e.target.value);
                     }}
-                    className="w-full px-4 py-3 bg-slate-900/60 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl text-sm transition-all text-slate-200"
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 rounded-lg text-sm text-slate-900 shadow-sm"
                   />
                 </div>
+                
                 <div className="space-y-1.5">
-                  <label htmlFor="capataz" className="text-xs font-semibold text-slate-400 block">Capataz Responsable</label>
+                  <label htmlFor="capataz" className="text-xs font-bold text-slate-700 uppercase block">Capataz Responsable</label>
                   <input
                     type="text"
                     id="capataz"
-                    placeholder="Escribe tu nombre completo"
+                    placeholder="Tu nombre y apellido"
                     value={capataz}
                     onChange={(e) => {
                       setCapataz(e.target.value);
                       triggerSaveDraft(fecha, e.target.value);
                     }}
-                    className="w-full px-4 py-3 bg-slate-900/60 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl text-sm transition-all placeholder-slate-650 text-slate-250"
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 rounded-lg text-sm text-slate-900 shadow-sm"
                   />
                   {historicalCapataces.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      <span className="text-[10px] text-slate-500 self-center">Recientes:</span>
+                    <div className="flex flex-wrap gap-1 mt-1.5">
+                      <span className="text-[9px] text-slate-500 font-bold self-center">Recientes:</span>
                       {historicalCapataces.slice(0, 3).map((cap) => (
                         <button
                           key={cap}
@@ -527,7 +527,7 @@ export default function NuevoReporte() {
                             setCapataz(cap);
                             triggerSaveDraft(fecha, cap);
                           }}
-                          className="px-2 py-0.5 bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-300 border border-slate-850 rounded-lg hover:text-slate-100 transition-all text-left"
+                          className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-[10px] text-slate-700 border border-slate-250 rounded-md transition-colors"
                         >
                           {cap}
                         </button>
@@ -538,21 +538,21 @@ export default function NuevoReporte() {
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="frente" className="text-xs font-semibold text-slate-400 block">Frente de Trabajo / Ubicación (PK)</label>
+                <label htmlFor="frente" className="text-xs font-bold text-slate-700 uppercase block">Frente de Trabajo / Punto Kilométrico (PK)</label>
                 <input
                   type="text"
                   id="frente"
-                  placeholder="Ej: Puente Río Claro, PK 45+200, Tranchera B"
+                  placeholder="Ej: Trinchera Norte, PK 24+400"
                   value={frenteTrabajo}
                   onChange={(e) => {
                     setFrenteTrabajo(e.target.value);
                     triggerSaveDraft(fecha, capataz, e.target.value);
                   }}
-                  className="w-full px-4 py-3 bg-slate-900/60 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl text-sm transition-all placeholder-slate-650 text-slate-250"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 rounded-lg text-sm text-slate-900 shadow-sm"
                 />
                 {historicalFrentes.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    <span className="text-[10px] text-slate-500 self-center">Recientes:</span>
+                  <div className="flex flex-wrap gap-1 mt-1.5">
+                    <span className="text-[9px] text-slate-500 font-bold self-center">Recientes:</span>
                     {historicalFrentes.slice(0, 3).map((frente) => (
                       <button
                         key={frente}
@@ -561,7 +561,7 @@ export default function NuevoReporte() {
                           setFrenteTrabajo(frente);
                           triggerSaveDraft(fecha, capataz, frente);
                         }}
-                        className="px-2 py-0.5 bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-300 border border-slate-850 rounded-lg hover:text-slate-100 transition-all text-left"
+                        className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-[10px] text-slate-700 border border-slate-250 rounded-md transition-colors"
                       >
                         {frente}
                       </button>
@@ -570,21 +570,21 @@ export default function NuevoReporte() {
                 )}
               </div>
 
-              <div className="space-y-2 border-t border-slate-900 pt-6">
-                <label className="text-xs font-bold text-slate-350 flex items-center gap-1.5">
-                  <FileCheck className="h-4 w-4 text-emerald-400" />
+              <div className="space-y-2 border-t border-slate-200 pt-5 mt-5">
+                <label className="text-xs font-extrabold text-slate-800 uppercase flex items-center gap-1.5">
+                  <FileCheck className="h-4.5 w-4.5 text-emerald-600" />
                   Cargar Foto de la HPT Firmada
                 </label>
                 
-                <div className="mt-1 flex flex-col items-center justify-center p-6 border border-dashed border-slate-800 rounded-2xl bg-slate-900/10 text-center hover:border-slate-700 transition-colors">
+                <div className="mt-1 flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 text-center hover:border-slate-400 transition-colors">
                   {hptPhoto ? (
                     <div className="space-y-4 w-full max-w-md">
-                      <div className="aspect-video relative rounded-xl overflow-hidden border border-slate-850 bg-slate-950">
+                      <div className="aspect-video relative rounded-lg overflow-hidden border border-slate-300 bg-slate-100 shadow-sm">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={hptPhoto} alt="HPT Cargada" className="object-cover w-full h-full" />
                       </div>
-                      <div className="flex items-center justify-between bg-slate-900/50 p-2.5 rounded-xl border border-slate-850 text-xs">
-                        <span className="text-slate-400 font-medium truncate max-w-[200px]">{hptPhotoName}</span>
+                      <div className="flex items-center justify-between bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
+                        <span className="text-slate-650 font-bold truncate max-w-[200px]">{hptPhotoName}</span>
                         <button
                           type="button"
                           onClick={() => {
@@ -592,7 +592,7 @@ export default function NuevoReporte() {
                             setHptPhotoName(null);
                             triggerSaveDraft(fecha, capataz, frenteTrabajo, null, null);
                           }}
-                          className="font-bold text-red-400 hover:text-red-300"
+                          className="font-extrabold text-red-600 hover:text-red-500 uppercase tracking-wider text-[10px]"
                         >
                           Eliminar
                         </button>
@@ -601,8 +601,8 @@ export default function NuevoReporte() {
                   ) : (
                     <div className="space-y-4">
                       <div className="flex justify-center gap-3">
-                        <label className="cursor-pointer bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-md flex items-center gap-1.5">
-                          <Camera className="h-4 w-4" /> Tomar Foto HPT
+                        <label className="cursor-pointer bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
+                          <Camera className="h-4 w-4 text-amber-500" /> Tomar Foto HPT
                           <input
                             type="file"
                             accept="image/*"
@@ -611,8 +611,8 @@ export default function NuevoReporte() {
                             className="hidden"
                           />
                         </label>
-                        <label className="cursor-pointer bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1.5">
-                          <Upload className="h-4 w-4" /> Seleccionar Archivo
+                        <label className="cursor-pointer bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
+                          <Upload className="h-4 w-4 text-slate-500" /> Seleccionar
                           <input
                             type="file"
                             accept="image/*"
@@ -621,8 +621,8 @@ export default function NuevoReporte() {
                           />
                         </label>
                       </div>
-                      <p className="text-xs text-slate-500">
-                        Se recomienda fotografiar la HPT completa y legible con las firmas operativas.
+                      <p className="text-xs text-slate-500 font-medium">
+                        Fotografía completa la hoja HPT firmada por los operadores antes del inicio.
                       </p>
                     </div>
                   )}
@@ -637,48 +637,48 @@ export default function NuevoReporte() {
           <div className="space-y-6">
             <div className="space-y-1 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-slate-150 flex items-center gap-2">
-                  <FileCheck className="h-5 w-5 text-indigo-400" />
-                  Actividades Ejecutadas
+                <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
+                  <FileCheck className="h-5 w-5 text-amber-500" />
+                  2. Actividades del Día
                 </h2>
-                <p className="text-xs text-slate-400">Declara las tareas realizadas durante el día y el tiempo estimado.</p>
+                <p className="text-xs text-slate-500 font-medium">Indica las tareas de movimiento de tierra realizadas en la jornada.</p>
               </div>
               <button
                 type="button"
                 onClick={addActivity}
-                className="text-xs font-bold px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-md flex items-center gap-1"
+                className="text-xs font-extrabold px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg shadow flex items-center gap-1 uppercase tracking-wider"
               >
-                <Plus className="h-4 w-4" /> Agregar
+                <Plus className="h-4 w-4 text-amber-500" /> Agregar Actividad
               </button>
             </div>
 
             {actividades.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-slate-900 bg-slate-950 p-8 text-center text-slate-500">
-                <Info className="h-6 w-6 mx-auto mb-2 text-slate-655" />
-                <p className="text-xs font-semibold">No has agregado ninguna actividad aún.</p>
-                <p className="text-xs text-slate-600 mt-1">Haz clic en "Agregar" para registrar el trabajo de hoy.</p>
+              <div className="rounded-xl border-2 border-dashed border-slate-200 bg-white p-10 text-center text-slate-500 shadow-sm">
+                <Info className="h-6 w-6 mx-auto mb-2 text-slate-400" />
+                <p className="text-xs font-bold uppercase text-slate-700">No has agregado actividades</p>
+                <p className="text-xs text-slate-500 mt-1">Presiona "Agregar Actividad" arriba para detallar las labores de hoy.</p>
               </div>
             ) : (
               <div className="space-y-4">
                 {actividades.map((act, index) => (
                   <div 
                     key={act.id} 
-                    className="p-4 rounded-2xl bg-slate-900/30 border border-slate-900 relative space-y-3"
+                    className="p-5 rounded-xl bg-white border border-slate-200 relative space-y-4 shadow-sm"
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-indigo-400">Actividad #{index + 1}</span>
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                      <span className="text-xs font-extrabold text-slate-800 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-wider">Actividad #{index + 1}</span>
                       <button
                         type="button"
                         onClick={() => removeActivity(act.id)}
-                        className="text-slate-600 hover:text-red-400 transition-colors"
+                        className="text-slate-400 hover:text-red-650 transition-colors"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-4.5 w-4.5" />
                       </button>
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       <div className="space-y-2">
-                        <label className="text-xs font-bold text-slate-400 block">Tipo de Actividad (Movimiento de Tierra)</label>
+                        <label className="text-xs font-extrabold text-slate-700 uppercase block">Tipo de Actividad (Movimiento de Tierra)</label>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                           {ACTIVIDADES_PRESETS.map((preset) => {
                             const isSelected = act.descripcion === preset.label;
@@ -687,28 +687,28 @@ export default function NuevoReporte() {
                                 key={preset.label}
                                 type="button"
                                 onClick={() => updateActivity(act.id, "descripcion", preset.label)}
-                                className={`p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1 group ${
+                                className={`p-3 rounded-lg border text-center transition-all flex flex-col items-center justify-center gap-1 group ${
                                   isSelected 
-                                    ? 'border-indigo-500 bg-indigo-950/40 text-indigo-300' 
-                                    : 'border-slate-850 bg-slate-950/40 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                                    ? 'border-amber-500 bg-amber-50 text-slate-900 font-extrabold ring-1 ring-amber-500' 
+                                    : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50'
                                 }`}
                               >
-                                <span className="text-xl group-hover:scale-110 transition-transform duration-200">{preset.icon}</span>
-                                <span className="text-[10px] sm:text-xs font-bold leading-tight">{preset.label}</span>
+                                <span className="text-xl">{preset.icon}</span>
+                                <span className="text-xs font-bold leading-tight">{preset.label}</span>
                               </button>
                             );
                           })}
                           <button
                             type="button"
                             onClick={() => updateActivity(act.id, "descripcion", "Otro")}
-                            className={`p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1 ${
+                            className={`p-3 rounded-lg border text-center transition-all flex flex-col items-center justify-center gap-1 ${
                               act.descripcion === "Otro" || (!ACTIVIDADES_PRESETS.some(p => p.label === act.descripcion) && act.descripcion !== "")
-                                ? 'border-indigo-500 bg-indigo-950/40 text-indigo-300' 
-                                : 'border-slate-850 bg-slate-950/40 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                                ? 'border-amber-500 bg-amber-50 text-slate-900 font-extrabold ring-1 ring-amber-500' 
+                                : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50'
                             }`}
                           >
                             <span className="text-xl">✏️</span>
-                            <span className="text-[10px] sm:text-xs font-bold leading-tight">Otro</span>
+                            <span className="text-xs font-bold leading-tight">Otro</span>
                           </button>
                         </div>
                         
@@ -718,41 +718,41 @@ export default function NuevoReporte() {
                             placeholder="Escribe la actividad manualmente..."
                             value={act.descripcion === "Otro" ? "" : act.descripcion}
                             onChange={(e) => updateActivity(act.id, "descripcion", e.target.value)}
-                            className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-850 rounded-xl text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-slate-200 mt-2"
+                            className="w-full px-3.5 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 mt-2 shadow-sm"
                           />
                         )}
                       </div>
 
-                      <div className="grid grid-cols-3 gap-3">
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-semibold text-slate-455">Horas Actividad</label>
+                      <div className="grid grid-cols-3 gap-3 pt-2">
+                        <div className="space-y-1">
+                          <label className="text-[10px] font-bold text-slate-600 uppercase block">Horas Estimadas</label>
                           <input
                             type="number"
                             min="0.5"
                             step="0.5"
                             value={act.horas}
                             onChange={(e) => updateActivity(act.id, "horas", parseFloat(e.target.value) || 0)}
-                            className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-850 rounded-xl text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-slate-200"
+                            className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 shadow-sm"
                           />
                         </div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-semibold text-slate-455">PK Inicio</label>
+                        <div className="space-y-1">
+                          <label className="text-[10px] font-bold text-slate-600 uppercase block">PK Inicio</label>
                           <input
                             type="text"
-                            placeholder="Ej: 12+340"
+                            placeholder="Ej: 14.200"
                             value={act.pkInicio || ""}
                             onChange={(e) => updateActivity(act.id, "pkInicio", e.target.value)}
-                            className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-850 rounded-xl text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-slate-200"
+                            className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 shadow-sm"
                           />
                         </div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-semibold text-slate-455">PK Fin</label>
+                        <div className="space-y-1">
+                          <label className="text-[10px] font-bold text-slate-600 uppercase block">PK Fin</label>
                           <input
                             type="text"
-                            placeholder="Ej: 12+450"
+                            placeholder="Ej: 14.500"
                             value={act.pkFin || ""}
                             onChange={(e) => updateActivity(act.id, "pkFin", e.target.value)}
-                            className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-850 rounded-xl text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-slate-200"
+                            className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 shadow-sm"
                           />
                         </div>
                       </div>
@@ -768,16 +768,16 @@ export default function NuevoReporte() {
         {step === 3 && (
           <div className="space-y-6">
             <div className="space-y-1">
-              <h2 className="text-xl font-bold text-slate-150 flex items-center gap-2">
-                <HardHat className="h-5 w-5 text-indigo-400" />
-                Mano de Obra y Maquinaria
+              <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
+                <HardHat className="h-5 w-5 text-amber-500" />
+                3. Operarios y Maquinarias
               </h2>
-              <p className="text-xs text-slate-400">Distribuye el personal y maquinarias asignándolos a cada actividad.</p>
+              <p className="text-xs text-slate-500 font-medium">Asigna el equipo de trabajo y las máquinas utilizadas en cada actividad.</p>
             </div>
 
             {actividades.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-slate-900 bg-slate-950 p-8 text-center text-slate-500">
-                <p className="text-xs font-semibold">Primero debes definir actividades en el Paso 2.</p>
+              <div className="rounded-xl border border-dashed border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
+                <p className="text-xs font-bold text-slate-700 uppercase">Primero debes definir actividades en el Paso 2.</p>
               </div>
             ) : (
               <div className="space-y-6">
@@ -786,52 +786,52 @@ export default function NuevoReporte() {
                   const machinesForAct = maquinaria.filter((maq) => maq.actividadId === act.id);
 
                   return (
-                    <div key={act.id} className="p-5 rounded-2xl border border-slate-900 bg-slate-900/10 space-y-4">
+                    <div key={act.id} className="p-5 rounded-xl border border-slate-200 bg-white space-y-5 shadow-sm">
                       {/* Cabecera Actividad */}
-                      <div className="border-b border-slate-900 pb-3 flex items-center justify-between">
+                      <div className="border-b border-slate-200 pb-3 flex items-center justify-between">
                         <div>
-                          <h3 className="font-bold text-slate-200 text-sm">{act.descripcion || "Actividad sin descripción"}</h3>
-                          <p className="text-xs text-slate-500">Horas declaradas: {act.horas} hrs</p>
+                          <h3 className="font-extrabold text-slate-900 text-sm">{act.descripcion || "Actividad sin descripción"}</h3>
+                          <p className="text-xs text-slate-500 font-medium">Lugar: PK {act.pkInicio || 'N/A'} al PK {act.pkFin || 'N/A'}</p>
                         </div>
-                        <span className="text-xs font-semibold px-2 py-0.5 bg-indigo-950/40 text-indigo-400 rounded-lg border border-indigo-900/40">Actividad</span>
+                        <span className="text-[10px] font-extrabold px-2.5 py-1 bg-slate-100 text-slate-800 rounded border border-slate-200 uppercase tracking-wider">Actividad</span>
                       </div>
 
                       {/* Mano de Obra */}
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <h4 className="text-xs font-bold text-slate-400 flex items-center gap-1">
+                          <h4 className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1">
                             Mano de Obra ({workersForAct.length})
                           </h4>
                           <button
                             type="button"
                             onClick={() => addWorker(act.id)}
-                            className="text-xs font-semibold px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-indigo-400 rounded-lg border border-slate-850 flex items-center gap-0.5"
+                            className="text-xs font-bold px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg border border-slate-350 flex items-center gap-0.5"
                           >
-                            <UserPlus className="h-3.5 w-3.5" /> Agregar Trabajador
+                            <UserPlus className="h-3.5 w-3.5 text-slate-500" /> AGREGAR TRABAJADOR
                           </button>
                         </div>
 
                         {workersForAct.length > 0 && (
                           <div className="space-y-2">
                             {workersForAct.map((mo) => (
-                              <div key={mo.id} className="grid grid-cols-1 md:grid-cols-12 gap-2 items-center bg-slate-950/60 p-3 rounded-xl border border-slate-900">
-                                <div className="md:col-span-6">
+                              <div key={mo.id} className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <div className="md:col-span-6 space-y-1">
                                   <input
                                     type="text"
                                     placeholder="Nombre del operario"
                                     value={mo.nombre}
                                     onChange={(e) => updateWorker(mo.id, "nombre", e.target.value)}
-                                    className="w-full px-3 py-1.5 bg-slate-900 border border-slate-850 rounded-lg text-xs text-slate-200"
+                                    className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900"
                                   />
                                   {historicalWorkers.length > 0 && (
                                     <div className="flex flex-wrap gap-1 mt-1">
-                                      <span className="text-[9px] text-slate-500 self-center">Recientes:</span>
+                                      <span className="text-[9px] text-slate-500 font-bold self-center">Recientes:</span>
                                       {historicalWorkers.slice(0, 3).map((wName) => (
                                         <button
                                           key={wName}
                                           type="button"
                                           onClick={() => updateWorker(mo.id, "nombre", wName)}
-                                          className="px-1.5 py-0.5 bg-slate-900 hover:bg-slate-800 text-[9px] text-slate-300 border border-slate-850 rounded hover:text-slate-100 transition-all"
+                                          className="px-1.5 py-0.5 bg-white hover:bg-slate-100 text-[9px] text-slate-700 border border-slate-200 rounded transition-colors"
                                         >
                                           {wName}
                                         </button>
@@ -847,23 +847,23 @@ export default function NuevoReporte() {
                                     placeholder="HH"
                                     value={mo.horas}
                                     onChange={(e) => updateWorker(mo.id, "horas", parseFloat(e.target.value) || 0)}
-                                    className="w-full px-3 py-1.5 bg-slate-900 border border-slate-850 rounded-lg text-xs text-slate-250 text-center"
+                                    className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900 text-center"
                                   />
                                 </div>
                                 <div className="md:col-span-3">
                                   <input
                                     type="text"
-                                    placeholder="Nota / Justificación (opc)"
+                                    placeholder="Nota / Actividad"
                                     value={mo.justificacion || ""}
                                     onChange={(e) => updateWorker(mo.id, "justificacion", e.target.value)}
-                                    className="w-full px-3 py-1.5 bg-slate-900 border border-slate-850 rounded-lg text-xs text-slate-300"
+                                    className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-800"
                                   />
                                 </div>
                                 <div className="md:col-span-1 flex justify-center">
                                   <button
                                     type="button"
                                     onClick={() => removeWorker(mo.id)}
-                                    className="text-slate-600 hover:text-red-400"
+                                    className="text-slate-400 hover:text-red-600"
                                   >
                                     <Trash2 className="h-4 w-4" />
                                   </button>
@@ -875,22 +875,22 @@ export default function NuevoReporte() {
                       </div>
 
                       {/* Maquinaria */}
-                      <div className="space-y-3 pt-3 border-t border-slate-900/60">
+                      <div className="space-y-3 pt-4 border-t border-slate-200">
                         <div className="flex items-center justify-between">
-                          <h4 className="text-xs font-bold text-slate-400 flex items-center gap-1">
+                          <h4 className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1">
                             Maquinaria ({machinesForAct.length})
                           </h4>
                           <button
                             type="button"
                             onClick={() => addMachine(act.id)}
-                            className="text-xs font-semibold px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-indigo-400 rounded-lg border border-slate-850 flex items-center gap-0.5"
+                            className="text-xs font-bold px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg border border-slate-355 flex items-center gap-0.5"
                           >
-                            <Truck className="h-3.5 w-3.5" /> Agregar Máquina
+                            <Truck className="h-3.5 w-3.5 text-slate-500" /> AGREGAR MÁQUINA
                           </button>
                         </div>
 
                         {machinesForAct.length > 0 && (
-                          <div className="space-y-2.5">
+                          <div className="space-y-3">
                             {machinesForAct.map((maq) => {
                               const needsJustification = maq.horasStandby > 0;
                               const isJustificationMissing = needsJustification && !maq.justificacion?.trim();
@@ -898,16 +898,18 @@ export default function NuevoReporte() {
                               return (
                                 <div 
                                   key={maq.id} 
-                                  className={`p-3.5 rounded-xl bg-slate-950/60 border transition-all ${isJustificationMissing ? 'border-amber-900/60 bg-amber-950/5' : 'border-slate-900'} space-y-3`}
+                                  className={`p-3.5 rounded-lg border transition-all ${
+                                    isJustificationMissing ? 'border-amber-400 bg-amber-50/40' : 'border-slate-200 bg-slate-50'
+                                  } space-y-3`}
                                 >
                                   <div className="flex flex-wrap items-center gap-3">
                                     <div className="flex-1 min-w-[200px] space-y-1">
                                       <input
                                         type="text"
-                                        placeholder="Código / Descripción (Ej: CAT-02, EX-05)"
+                                        placeholder="Código / Descripción (Ej: EX-05, CAT-02)"
                                         value={maq.codigo}
                                         onChange={(e) => updateMachine(maq.id, "codigo", e.target.value)}
-                                        className="w-full px-3 py-2 bg-slate-900 border border-slate-850 rounded-lg text-xs text-slate-200 font-medium"
+                                        className="w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-xs text-slate-900 font-bold"
                                       />
                                       {/* Botones de sugerencias rápidas */}
                                       <div className="flex flex-wrap gap-1 mt-1">
@@ -920,7 +922,7 @@ export default function NuevoReporte() {
                                               const count = maquinaria.filter(m => m.codigo.startsWith(pType)).length + 1;
                                               updateMachine(maq.id, "codigo", `${pType} #${count}`);
                                             }}
-                                            className="px-1.5 py-0.5 bg-slate-900 hover:bg-slate-800 text-[9px] text-slate-400 border border-slate-850 rounded"
+                                            className="px-1.5 py-0.5 bg-white hover:bg-slate-100 text-[9px] text-slate-600 border border-slate-200 rounded font-semibold"
                                           >
                                             +{pType}
                                           </button>
@@ -928,13 +930,13 @@ export default function NuevoReporte() {
                                         {/* Historial */}
                                         {historicalMachines.length > 0 && (
                                           <>
-                                            <span className="text-[9px] text-slate-700 self-center">|</span>
+                                            <span className="text-[9px] text-slate-300 self-center">|</span>
                                             {historicalMachines.slice(0, 3).map((mCode) => (
                                               <button
                                                 key={mCode}
                                                 type="button"
                                                 onClick={() => updateMachine(maq.id, "codigo", mCode)}
-                                                className="px-1.5 py-0.5 bg-indigo-950/30 hover:bg-indigo-900/30 text-[9px] text-indigo-400 border border-indigo-900/30 rounded"
+                                                className="px-1.5 py-0.5 bg-slate-200 hover:bg-slate-300 text-[9px] text-slate-800 border border-slate-250 rounded font-semibold"
                                               >
                                                 {mCode}
                                               </button>
@@ -944,41 +946,41 @@ export default function NuevoReporte() {
                                       </div>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                      <label className="text-[10px] text-slate-500 font-semibold uppercase">Op:</label>
+                                      <label className="text-[10px] font-bold text-slate-500 uppercase">Horas Op:</label>
                                       <input
                                         type="number"
                                         min="0"
                                         step="0.5"
-                                        placeholder="Horas Op"
+                                        placeholder="Op"
                                         value={maq.horasOperativas}
                                         onChange={(e) => updateMachine(maq.id, "horasOperativas", parseFloat(e.target.value) || 0)}
-                                        className="w-16 px-2.5 py-1.5 bg-slate-900 border border-slate-850 rounded-lg text-xs text-slate-250 text-center"
+                                        className="w-16 px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900 text-center font-bold"
                                       />
                                     </div>
                                     <div className="flex items-center gap-2">
-                                      <label className="text-[10px] text-slate-500 font-semibold uppercase">Stby:</label>
+                                      <label className="text-[10px] font-bold text-slate-500 uppercase">Horas Stby:</label>
                                       <input
                                         type="number"
                                         min="0"
                                         step="0.5"
-                                        placeholder="Horas Stby"
+                                        placeholder="Stby"
                                         value={maq.horasStandby}
                                         onChange={(e) => updateMachine(maq.id, "horasStandby", parseFloat(e.target.value) || 0)}
-                                        className="w-16 px-2.5 py-1.5 bg-slate-900 border border-slate-850 rounded-lg text-xs text-slate-250 text-center"
+                                        className="w-16 px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900 text-center font-bold"
                                       />
                                     </div>
                                     <button
                                       type="button"
                                       onClick={() => removeMachine(maq.id)}
-                                      className="text-slate-600 hover:text-red-400 ml-auto"
+                                      className="text-slate-400 hover:text-red-600 ml-auto"
                                     >
                                       <Trash2 className="h-4 w-4" />
                                     </button>
                                   </div>
 
                                   {needsJustification && (
-                                    <div className="space-y-2 border-t border-slate-900/40 pt-2">
-                                      <label className="text-[10px] text-amber-300 font-bold block">
+                                    <div className="space-y-2 border-t border-slate-250 pt-2.5 mt-2">
+                                      <label className="text-[10px] text-amber-600 font-black block uppercase tracking-wider">
                                         * Motivo del Standby (Selecciona una opción):
                                       </label>
                                       
@@ -990,10 +992,10 @@ export default function NuevoReporte() {
                                               key={reason}
                                               type="button"
                                               onClick={() => updateMachine(maq.id, "justificacion", reason)}
-                                              className={`px-2 py-1 rounded text-[10px] border transition-all ${
+                                              className={`px-2.5 py-1 rounded text-[10px] border transition-all ${
                                                 isSelected
-                                                  ? 'border-amber-500 bg-amber-950/40 text-amber-300 font-bold'
-                                                  : 'border-slate-850 bg-slate-900/20 text-slate-400 hover:border-slate-700 hover:text-slate-350'
+                                                  ? 'border-amber-500 bg-amber-550 text-slate-950 font-black'
+                                                  : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50'
                                               }`}
                                             >
                                               {reason}
@@ -1003,10 +1005,10 @@ export default function NuevoReporte() {
                                         <button
                                           type="button"
                                           onClick={() => updateMachine(maq.id, "justificacion", "Otro")}
-                                          className={`px-2 py-1 rounded text-[10px] border transition-all ${
+                                          className={`px-2.5 py-1 rounded text-[10px] border transition-all ${
                                             maq.justificacion === "Otro" || (!STANDBY_PRESETS.includes(maq.justificacion || "") && maq.justificacion !== "")
-                                              ? 'border-amber-500 bg-amber-950/40 text-amber-300 font-bold'
-                                              : 'border-slate-850 bg-slate-900/20 text-slate-400 hover:border-slate-700'
+                                              ? 'border-amber-500 bg-amber-550 text-slate-950 font-black'
+                                              : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'
                                           }`}
                                         >
                                           ✏️ Otro motivo
@@ -1019,10 +1021,10 @@ export default function NuevoReporte() {
                                           placeholder="Escribe la justificación manualmente..."
                                           value={maq.justificacion === "Otro" ? "" : maq.justificacion || ""}
                                           onChange={(e) => updateMachine(maq.id, "justificacion", e.target.value)}
-                                          className={`w-full px-3 py-1.5 bg-slate-900 border rounded-lg text-xs text-slate-200 focus:ring-1 transition-all ${
+                                          className={`w-full px-3 py-1.5 bg-white border rounded-md text-xs text-slate-900 focus:ring-1 transition-all ${
                                             isJustificationMissing 
-                                              ? 'border-amber-850 focus:border-amber-500 focus:ring-amber-500' 
-                                              : 'border-slate-850 focus:border-indigo-500 focus:ring-indigo-500'
+                                              ? 'border-amber-500 focus:border-amber-600 focus:ring-amber-500' 
+                                              : 'border-slate-300 focus:border-slate-500 focus:ring-slate-500'
                                           }`}
                                         />
                                       )}
@@ -1046,17 +1048,17 @@ export default function NuevoReporte() {
         {step === 4 && (
           <div className="space-y-6">
             <div className="space-y-1">
-              <h2 className="text-xl font-bold text-slate-150 flex items-center gap-2">
-                <Camera className="h-5 w-5 text-indigo-400" />
-                Fotografías de Avance
+              <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
+                <Camera className="h-5 w-5 text-amber-500" />
+                4. Fotografías de Avance
               </h2>
-              <p className="text-xs text-slate-400">Adjunta imágenes tomadas en terreno para documentar visualmente el progreso.</p>
+              <p className="text-xs text-slate-500 font-medium">Adjunta imágenes tomadas en terreno para documentar visualmente el progreso.</p>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex justify-center gap-3 p-6 border border-dashed border-slate-800 rounded-2xl bg-slate-900/10 text-center hover:border-slate-700 transition-colors">
-                <label className="cursor-pointer bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-md flex items-center gap-1.5">
-                  <Camera className="h-4 w-4" /> Tomar Fotos (Cámara)
+            <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
+              <div className="flex justify-center gap-3 p-6 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 text-center hover:border-slate-400 transition-colors">
+                <label className="cursor-pointer bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
+                  <Camera className="h-4 w-4 text-amber-500" /> Tomar Fotos (Cámara)
                   <input
                     type="file"
                     multiple
@@ -1066,8 +1068,8 @@ export default function NuevoReporte() {
                     className="hidden"
                   />
                 </label>
-                <label className="cursor-pointer bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1.5">
-                  <Upload className="h-4 w-4" /> Subir Archivos
+                <label className="cursor-pointer bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-4 py-2.5 rounded-lg text-xs font-extrabold shadow flex items-center gap-1.5 uppercase tracking-wider">
+                  <Upload className="h-4 w-4 text-slate-550" /> Seleccionar
                   <input
                     type="file"
                     multiple
@@ -1081,14 +1083,14 @@ export default function NuevoReporte() {
               {fotosAvance.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {fotosAvance.map((f) => (
-                    <div key={f.id} className="rounded-xl border border-slate-900 bg-slate-900/30 overflow-hidden flex flex-col">
-                      <div className="aspect-video relative bg-slate-950 border-b border-slate-900">
+                    <div key={f.id} className="rounded-xl border border-slate-200 bg-slate-50 overflow-hidden flex flex-col shadow-sm">
+                      <div className="aspect-video relative bg-slate-200 border-b border-slate-300">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={f.photo} alt={f.photoName} className="object-cover w-full h-full" />
                         <button
                           type="button"
                           onClick={() => removePhoto(f.id)}
-                          className="absolute top-2 right-2 p-1.5 bg-slate-950/80 hover:bg-red-950 text-slate-400 hover:text-red-400 rounded-lg transition-colors border border-slate-850"
+                          className="absolute top-2 right-2 p-1.5 bg-slate-900/80 hover:bg-red-600 text-slate-200 hover:text-white rounded-lg transition-colors border border-slate-700"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -1096,23 +1098,23 @@ export default function NuevoReporte() {
                       
                       <div className="p-3.5 space-y-2.5">
                         <div className="space-y-1">
-                          <label className="text-[10px] text-slate-500 font-bold uppercase block">Ubicación / Punto Kilométrico (PK)</label>
+                          <label className="text-[9px] text-slate-500 font-extrabold uppercase block">Ubicación / Punto Kilométrico (PK)</label>
                           <input
                             type="text"
                             placeholder="Ej: PK 12+350 o Frente Norte"
                             value={f.pk || ""}
                             onChange={(e) => updatePhotoDesc(f.id, "pk", e.target.value)}
-                            className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-850 rounded-lg text-xs text-slate-200"
+                            className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900"
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-[10px] text-slate-500 font-bold uppercase block">Breve Descripción</label>
+                          <label className="text-[9px] text-slate-500 font-extrabold uppercase block">Breve Descripción</label>
                           <input
                             type="text"
-                            placeholder="Ej: Terminación de enfierradura en pilote 3"
+                            placeholder="Ej: Terminación de excavación canal"
                             value={f.descripcion}
                             onChange={(e) => updatePhotoDesc(f.id, "descripcion", e.target.value)}
-                            className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-850 rounded-lg text-xs text-slate-200"
+                            className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-900"
                           />
                         </div>
                       </div>
@@ -1128,54 +1130,54 @@ export default function NuevoReporte() {
         {step === 5 && (
           <div className="space-y-6">
             <div className="space-y-1">
-              <h2 className="text-xl font-bold text-slate-150 flex items-center gap-2">
-                <Send className="h-5 w-5 text-emerald-400" />
-                Resumen y Envío
+              <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
+                <Send className="h-5 w-5 text-emerald-600" />
+                5. Resumen y Envío
               </h2>
-              <p className="text-xs text-slate-400">Revisa la información consolidada del día y envíala a través de WhatsApp.</p>
+              <p className="text-xs text-slate-500 font-medium">Revisa el reporte consolidado e inicie la subida a WhatsApp.</p>
             </div>
 
-            <div className="space-y-4">
+            <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-semibold text-slate-400">Mensaje de WhatsApp Generado</label>
+                  <label className="text-xs font-extrabold text-slate-700 uppercase">Texto del Mensaje Generado</label>
                   <button
                     type="button"
                     onClick={handleCopyText}
-                    className="text-xs font-semibold px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-indigo-400 border border-slate-800 rounded-lg flex items-center gap-1 active:scale-[0.98] transition-all"
+                    className="text-xs font-bold px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-lg flex items-center gap-1 active:scale-[0.98] transition-all"
                   >
-                    {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
-                    {copied ? "¡Copiado!" : "Copiar Texto"}
+                    {copied ? <Check className="h-3.5 w-3.5 text-emerald-600 animate-scale-up" /> : <Copy className="h-3.5 w-3.5 text-slate-500" />}
+                    {copied ? "COPIADO" : "COPIAR TEXTO"}
                   </button>
                 </div>
 
-                <div className="bg-slate-900 border border-slate-850 rounded-2xl p-4 font-mono text-xs text-slate-300 leading-relaxed whitespace-pre-wrap select-all max-h-[40vh] overflow-y-auto">
+                <div className="bg-slate-900 border-2 border-slate-800 rounded-xl p-4 font-mono text-xs text-slate-100 leading-relaxed whitespace-pre-wrap select-all max-h-[40vh] overflow-y-auto shadow-inner">
                   {getWhatsAppMessageText()}
                 </div>
               </div>
 
               {/* Notas informativas sobre archivos */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="bg-slate-900/20 border border-slate-900 p-4 rounded-xl flex items-start gap-2.5">
-                  <div className="bg-emerald-950 text-emerald-400 p-1.5 rounded-lg border border-emerald-900/50 mt-0.5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                <div className="bg-slate-50 border border-slate-200 p-3 rounded-lg flex items-start gap-2.5">
+                  <div className="bg-emerald-50 text-emerald-700 p-1.5 rounded border border-emerald-200 mt-0.5">
                     <FileCheck className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-xs font-semibold text-slate-350 block">HPT Firmada</span>
-                    <span className="text-[10px] text-slate-500">
-                      {hptPhoto ? "✓ Guardada en borrador de este dispositivo." : "⚠ No se ha subido foto de HPT."}
+                    <span className="text-xs font-bold text-slate-800 block uppercase tracking-wider text-[10px]">HPT Firmada</span>
+                    <span className="text-[10px] text-slate-500 font-medium">
+                      {hptPhoto ? "✓ Guardada en el borrador del dispositivo." : "⚠ No se ha subido foto de HPT."}
                     </span>
                   </div>
                 </div>
 
-                <div className="bg-slate-900/20 border border-slate-900 p-4 rounded-xl flex items-start gap-2.5">
-                  <div className="bg-indigo-950 text-indigo-400 p-1.5 rounded-lg border border-indigo-900/50 mt-0.5">
+                <div className="bg-slate-50 border border-slate-200 p-3 rounded-lg flex items-start gap-2.5">
+                  <div className="bg-slate-200 text-slate-800 p-1.5 rounded border border-slate-300 mt-0.5">
                     <Camera className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-xs font-semibold text-slate-350 block">Registro Fotográfico</span>
-                    <span className="text-[10px] text-slate-500">
-                      {fotosAvance.length > 0 ? `✓ ${fotosAvance.length} fotos guardadas localmente.` : "⚠ No se han agregado fotos de avance."}
+                    <span className="text-xs font-bold text-slate-800 block uppercase tracking-wider text-[10px]">Fotos de Avance</span>
+                    <span className="text-[10px] text-slate-500 font-medium">
+                      {fotosAvance.length > 0 ? `✓ ${fotosAvance.length} fotos guardadas localmente.` : "⚠ Sin fotografías de avance."}
                     </span>
                   </div>
                 </div>
@@ -1185,9 +1187,9 @@ export default function NuevoReporte() {
               <button
                 type="button"
                 onClick={handleSendWhatsApp}
-                className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold rounded-xl text-sm shadow-lg shadow-emerald-950/20 flex items-center justify-center gap-2 group transition-all"
+                className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-sm shadow-md flex items-center justify-center gap-2 group transition-all uppercase tracking-wider"
               >
-                <Send className="h-5 w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <Send className="h-5 w-5" />
                 Enviar a WhatsApp del Secretario Técnico
               </button>
             </div>
@@ -1196,13 +1198,13 @@ export default function NuevoReporte() {
       </main>
 
       {/* Footer Fijo del Formulario */}
-      <footer className="fixed bottom-0 left-0 right-0 border-t border-slate-900 bg-slate-950/90 backdrop-blur-md py-4 px-4 sm:px-6 z-40">
+      <footer className="fixed bottom-0 left-0 right-0 border-t border-slate-200 bg-white py-4 px-4 sm:px-6 z-40 shadow-lg">
         <div className="max-w-3xl mx-auto flex items-center justify-between gap-3">
           <button
             type="button"
             disabled={step === 1}
             onClick={() => setStep(step - 1)}
-            className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-xl text-xs font-bold border border-slate-800 disabled:opacity-0 transition-all flex items-center gap-1"
+            className="px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-bold border border-slate-300 disabled:opacity-0 transition-all flex items-center gap-1 uppercase"
           >
             <ArrowLeft className="h-4 w-4" /> Anterior
           </button>
@@ -1211,9 +1213,9 @@ export default function NuevoReporte() {
             <button
               type="button"
               onClick={handleFinalize}
-              className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-indigo-400 rounded-xl text-xs font-bold border border-slate-800 hover:text-indigo-300 transition-all flex items-center gap-1.5"
+              className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold border border-slate-300 transition-all flex items-center gap-1.5 uppercase"
             >
-              <Save className="h-4 w-4" /> Guardar Borrador
+              <Save className="h-4 w-4 text-amber-500" /> Guardar Borrador
             </button>
             
             {step < 5 ? (
@@ -1238,17 +1240,17 @@ export default function NuevoReporte() {
                   }
                   setStep(step + 1);
                 }}
-                className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md flex items-center gap-1"
+                className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-bold shadow flex items-center gap-1 uppercase"
               >
-                Siguiente <ArrowRight className="h-4 w-4" />
+                Siguiente <ArrowRight className="h-4 w-4 text-amber-500" />
               </button>
             ) : (
               <button
                 type="button"
                 onClick={handleFinalize}
-                className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 rounded-xl text-xs font-black shadow-md flex items-center gap-1.5"
+                className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-black shadow flex items-center gap-1.5 uppercase tracking-wider"
               >
-                <Check className="h-4 w-4" /> Finalizar y Cerrar
+                <Check className="h-4 w-4" /> Finalizar y Guardar
               </button>
             )}
           </div>

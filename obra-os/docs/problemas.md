@@ -5,7 +5,7 @@
 
 ---
 
-# Problema 001 - Elaboración manual del informe diario
+# P-001 - Elaboración manual del informe diario
 
 ## Fecha
 
@@ -18,7 +18,6 @@ Capataz
 ## Contexto
 
 Al finalizar cada jornada debo elaborar manualmente un informe diario para el Secretario Técnico.
-
 Actualmente el informe se redacta completamente a mano y posteriormente se envía por WhatsApp.
 
 ## Información que debo registrar
@@ -66,7 +65,7 @@ Toda la información debe volver a escribirse manualmente.
 
 ---
 
-# Problema 002 - El informe muchas veces no alcanza a enviarse
+# P-002 - Falta de tiempo para entregar el informe diario
 
 ## Fecha
 
@@ -79,18 +78,14 @@ Capataz
 ## Contexto
 
 Existen jornadas donde la presión operacional impide abandonar el frente de trabajo para elaborar el informe diario.
-
 La prioridad siempre es terminar correctamente la actividad en terreno.
-
-## Qué ocurre
 
 Cuando termina la jornada ya no queda tiempo suficiente para redactar el informe antes de que el Secretario Técnico finalice su horario.
 
 ## Consecuencia
 
-El Secretario Técnico debe esperar el informe o continuar su trabajo sin esa información.
-
-En ocasiones debe completar su propio informe al día siguiente.
+- El Secretario Técnico debe esperar el informe o continuar su trabajo sin esa información.
+- En ocasiones debe completar su propio informe al día siguiente.
 
 ## Personas afectadas
 
@@ -103,7 +98,7 @@ En ocasiones debe completar su propio informe al día siguiente.
 
 ---
 
-# Problema 003 - La misma información se escribe varias veces
+# P-003 - Duplicación de información
 
 ## Fecha
 
@@ -116,7 +111,6 @@ Capataz
 ## Contexto
 
 La información generada durante el día ya existe.
-
 Sin embargo debe volver a escribirse manualmente al finalizar la jornada.
 
 ## Ejemplos
@@ -129,11 +123,13 @@ Sin embargo debe volver a escribirse manualmente al finalizar la jornada.
 
 ## Consecuencia
 
-Duplicación del trabajo.
+- Duplicación del trabajo.
+- Mayor probabilidad de errores.
+- Pérdida de tiempo.
 
-Mayor probabilidad de errores.
+## Personas afectadas
 
-Pérdida de tiempo.
+- Capataz.
 
 ## Impacto
 
@@ -141,7 +137,7 @@ Pérdida de tiempo.
 
 ---
 
-# Problema 004 - Registro manual de horas por actividad
+# P-004 - Distribución manual de horas por actividad y justificación
 
 ## Fecha
 
@@ -154,7 +150,6 @@ Capataz
 ## Contexto
 
 Al finalizar la jornada debo distribuir las horas trabajadas entre todas las actividades ejecutadas.
-
 Además debo justificar las horas de cada trabajador y de cada maquinaria.
 
 ## Información registrada
@@ -166,11 +161,13 @@ Además debo justificar las horas de cada trabajador y de cada maquinaria.
 
 ## Consecuencia
 
-Proceso lento.
+- Proceso lento.
+- Información repetitiva.
+- Mayor riesgo de errores.
 
-Información repetitiva.
+## Personas afectadas
 
-Mayor riesgo de errores.
+- Capataz.
 
 ## Impacto
 
@@ -178,7 +175,7 @@ Mayor riesgo de errores.
 
 ---
 
-# Problema 005 - Solicitud diaria de fotografías
+# P-005 - Búsqueda y envío manual de fotografías de avance
 
 ## Fecha
 
@@ -191,15 +188,14 @@ Secretario Técnico
 ## Contexto
 
 Todos los días el Secretario Técnico solicita fotografías del avance mediante WhatsApp.
-
-Las fotografías deben buscarse manualmente entre todas las imágenes tomadas durante la jornada.
+Las fotografías deben buscarse manualmente entre todas las imágenes tomadas durante la jornada por el Capataz.
 
 ## Consecuencia
 
-- Tiempo perdido.
+- Tiempo perdido en buscar y filtrar imágenes.
 - Fotografías desordenadas.
 - Riesgo de enviar fotografías incorrectas.
-- No existe una organización por actividad o por PK.
+- No existe una organización por actividad o por PK (Punto Kilométrico).
 
 ## Personas afectadas
 
@@ -212,7 +208,7 @@ Las fotografías deben buscarse manualmente entre todas las imágenes tomadas du
 
 ---
 
-# Problema 006 - Envío manual de HPT
+# P-006 - Envío manual de la HPT firmada
 
 ## Fecha
 
@@ -224,15 +220,18 @@ Capataz
 
 ## Contexto
 
-La HPT debe ser fotografiada y posteriormente enviada por WhatsApp.
-
+La Hoja de Planificación del Trabajo (HPT) firmada en terreno debe ser fotografiada y posteriormente enviada por WhatsApp.
 No existe un registro centralizado.
 
 ## Consecuencia
 
-Puede extraviarse entre conversaciones.
+- Puede extraviarse entre conversaciones de chat.
+- Debe volver a solicitarse si no se encuentra.
 
-Debe volver a solicitarse.
+## Personas afectadas
+
+- Capataz.
+- Secretario Técnico.
 
 ## Impacto
 
@@ -240,29 +239,30 @@ Debe volver a solicitarse.
 
 ---
 
-# Problema 007 - Dependencia entre personas
+# P-007 - Dependencia del Secretario Técnico respecto del informe del Capataz
 
 ## Fecha
 
 17-07-2026
 
-## Usuarios
+## Usuario
 
-Capataz
-
-Secretario Técnico
+Capataz, Secretario Técnico
 
 ## Contexto
 
-El Secretario Técnico necesita el informe del capataz para elaborar su propio informe.
-
+El Secretario Técnico necesita el informe del capataz para elaborar su propio informe diario.
 Mientras el informe no sea enviado, su trabajo queda incompleto.
 
 ## Consecuencia
 
-Se generan retrasos entre distintos cargos.
+- Se generan retrasos entre distintos cargos.
+- Toda la cadena depende de que una persona alcance a terminar primero.
 
-Toda la cadena depende de que una persona alcance a terminar primero.
+## Personas afectadas
+
+- Capataz.
+- Secretario Técnico.
 
 ## Impacto
 
@@ -270,17 +270,21 @@ Toda la cadena depende de que una persona alcance a terminar primero.
 
 ---
 
-# Problema 008 - WhatsApp se convierte en el sistema de gestión
+# P-008 - Uso de WhatsApp como sistema informal de gestión de obra
 
 ## Fecha
 
 17-07-2026
 
+## Usuario
+
+Capataz, Secretario Técnico
+
 ## Contexto
 
-Gran parte de la información operativa se transmite mediante WhatsApp.
+Gran parte de la información operativa de la obra se transmite mediante WhatsApp de manera informal.
 
-Ejemplos
+## Ejemplos
 
 - Informes.
 - Fotografías.
@@ -291,13 +295,15 @@ Ejemplos
 
 ## Consecuencia
 
-La información queda dispersa.
+- La información queda dispersa.
+- No existe historial ordenado.
+- Es difícil buscar información antigua.
+- No existe trazabilidad formal.
 
-No existe historial ordenado.
+## Personas afectadas
 
-Es difícil buscar información antigua.
-
-No existe trazabilidad.
+- Capataz.
+- Secretario Técnico.
 
 ## Impacto
 

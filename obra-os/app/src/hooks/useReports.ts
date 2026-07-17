@@ -90,6 +90,50 @@ export function useReports() {
     saveReportsList(updated);
   };
 
+  // Obtener lista única de trabajadores históricos
+  const getHistoricalWorkers = (): string[] => {
+    const workers = new Set<string>();
+    reports.forEach((report) => {
+      if (report.recursos?.manoObra) {
+        report.recursos.manoObra.forEach((mo) => {
+          if (mo.nombre?.trim()) workers.add(mo.nombre.trim());
+        });
+      }
+    });
+    return Array.from(workers);
+  };
+
+  // Obtener lista única de maquinarias históricas
+  const getHistoricalMachines = (): string[] => {
+    const machines = new Set<string>();
+    reports.forEach((report) => {
+      if (report.recursos?.maquinaria) {
+        report.recursos.maquinaria.forEach((maq) => {
+          if (maq.codigo?.trim()) machines.add(maq.codigo.trim());
+        });
+      }
+    });
+    return Array.from(machines);
+  };
+
+  // Obtener capataces históricos
+  const getHistoricalCapataces = (): string[] => {
+    const capataces = new Set<string>();
+    reports.forEach((report) => {
+      if (report.capataz?.trim()) capataces.add(report.capataz.trim());
+    });
+    return Array.from(capataces);
+  };
+
+  // Obtener frentes históricos
+  const getHistoricalFrentes = (): string[] => {
+    const frentes = new Set<string>();
+    reports.forEach((report) => {
+      if (report.frenteTrabajo?.trim()) frentes.add(report.frenteTrabajo.trim());
+    });
+    return Array.from(frentes);
+  };
+
   return {
     reports,
     draft,
@@ -98,5 +142,9 @@ export function useReports() {
     clearDraft,
     saveReport,
     deleteReport,
+    historicalWorkers: getHistoricalWorkers(),
+    historicalMachines: getHistoricalMachines(),
+    historicalCapataces: getHistoricalCapataces(),
+    historicalFrentes: getHistoricalFrentes(),
   };
 }

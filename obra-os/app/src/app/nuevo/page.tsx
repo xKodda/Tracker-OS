@@ -66,9 +66,45 @@ const compressImage = (base64Str: string, maxWidth = 800, maxHeight = 600): Prom
   });
 };
 
+const ACTIVIDADES_PRESETS = [
+  { label: "Excavación", icon: "🏗️" },
+  { label: "Carga y Transporte", icon: "🚛" },
+  { label: "Compactación / Relleno", icon: "🚜" },
+  { label: "Despeje y Escarpe", icon: "🌱" },
+  { label: "Perfilado / Nivelación", icon: "📐" },
+  { label: "Acopio de Material", icon: "🪵" },
+];
+
+const MAQUINARIA_PRESETS = [
+  "Excavadora",
+  "Camión Tolva",
+  "Bulldozer",
+  "Motoniveladora",
+  "Rodillo Compactador",
+  "Retroexcavadora",
+  "Cargador Frontal",
+];
+
+const STANDBY_PRESETS = [
+  "Espera de Camiones / Tráfico",
+  "Falla Mecánica / Reparación",
+  "Mal Clima / Lluvia",
+  "Falta de Frente Liberado / Topografía",
+  "Carga de Combustible",
+];
+
 export default function NuevoReporte() {
   const router = useRouter();
-  const { draft, saveDraft, saveReport, clearDraft } = useReports();
+  const { 
+    draft, 
+    saveDraft, 
+    saveReport, 
+    clearDraft,
+    historicalWorkers,
+    historicalMachines,
+    historicalCapataces,
+    historicalFrentes
+  } = useReports();
   const [step, setStep] = useState(1);
   const [copied, setCopied] = useState(false);
 
@@ -480,6 +516,24 @@ export default function NuevoReporte() {
                     }}
                     className="w-full px-4 py-3 bg-slate-900/60 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl text-sm transition-all placeholder-slate-650 text-slate-250"
                   />
+                  {historicalCapataces.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      <span className="text-[10px] text-slate-500 self-center">Recientes:</span>
+                      {historicalCapataces.slice(0, 3).map((cap) => (
+                        <button
+                          key={cap}
+                          type="button"
+                          onClick={() => {
+                            setCapataz(cap);
+                            triggerSaveDraft(fecha, cap);
+                          }}
+                          className="px-2 py-0.5 bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-300 border border-slate-850 rounded-lg hover:text-slate-100 transition-all text-left"
+                        >
+                          {cap}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -496,6 +550,24 @@ export default function NuevoReporte() {
                   }}
                   className="w-full px-4 py-3 bg-slate-900/60 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl text-sm transition-all placeholder-slate-650 text-slate-250"
                 />
+                {historicalFrentes.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    <span className="text-[10px] text-slate-500 self-center">Recientes:</span>
+                    {historicalFrentes.slice(0, 3).map((frente) => (
+                      <button
+                        key={frente}
+                        type="button"
+                        onClick={() => {
+                          setFrenteTrabajo(frente);
+                          triggerSaveDraft(fecha, capataz, frente);
+                        }}
+                        className="px-2 py-0.5 bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-300 border border-slate-850 rounded-lg hover:text-slate-100 transition-all text-left"
+                      >
+                        {frente}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="space-y-2 border-t border-slate-900 pt-6">
@@ -605,15 +677,50 @@ export default function NuevoReporte() {
                     </div>
 
                     <div className="space-y-3">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-semibold text-slate-455">Descripción de la Actividad</label>
-                        <input
-                          type="text"
-                          placeholder="Ej: Hormigonado de fundaciones, excavación de zanja para canal"
-                          value={act.descripcion}
-                          onChange={(e) => updateActivity(act.id, "descripcion", e.target.value)}
-                          className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-850 rounded-xl text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-slate-200"
-                        />
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold text-slate-400 block">Tipo de Actividad (Movimiento de Tierra)</label>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                          {ACTIVIDADES_PRESETS.map((preset) => {
+                            const isSelected = act.descripcion === preset.label;
+                            return (
+                              <button
+                                key={preset.label}
+                                type="button"
+                                onClick={() => updateActivity(act.id, "descripcion", preset.label)}
+                                className={`p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1 group ${
+                                  isSelected 
+                                    ? 'border-indigo-500 bg-indigo-950/40 text-indigo-300' 
+                                    : 'border-slate-850 bg-slate-950/40 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                                }`}
+                              >
+                                <span className="text-xl group-hover:scale-110 transition-transform duration-200">{preset.icon}</span>
+                                <span className="text-[10px] sm:text-xs font-bold leading-tight">{preset.label}</span>
+                              </button>
+                            );
+                          })}
+                          <button
+                            type="button"
+                            onClick={() => updateActivity(act.id, "descripcion", "Otro")}
+                            className={`p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1 ${
+                              act.descripcion === "Otro" || (!ACTIVIDADES_PRESETS.some(p => p.label === act.descripcion) && act.descripcion !== "")
+                                ? 'border-indigo-500 bg-indigo-950/40 text-indigo-300' 
+                                : 'border-slate-850 bg-slate-950/40 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                            }`}
+                          >
+                            <span className="text-xl">✏️</span>
+                            <span className="text-[10px] sm:text-xs font-bold leading-tight">Otro</span>
+                          </button>
+                        </div>
+                        
+                        {(act.descripcion === "Otro" || (!ACTIVIDADES_PRESETS.some(p => p.label === act.descripcion) && act.descripcion !== "")) && (
+                          <input
+                            type="text"
+                            placeholder="Escribe la actividad manualmente..."
+                            value={act.descripcion === "Otro" ? "" : act.descripcion}
+                            onChange={(e) => updateActivity(act.id, "descripcion", e.target.value)}
+                            className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-850 rounded-xl text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-slate-200 mt-2"
+                          />
+                        )}
                       </div>
 
                       <div className="grid grid-cols-3 gap-3">
@@ -711,11 +818,26 @@ export default function NuevoReporte() {
                                 <div className="md:col-span-6">
                                   <input
                                     type="text"
-                                    placeholder="Nombre del trabajador"
+                                    placeholder="Nombre del operario"
                                     value={mo.nombre}
                                     onChange={(e) => updateWorker(mo.id, "nombre", e.target.value)}
                                     className="w-full px-3 py-1.5 bg-slate-900 border border-slate-850 rounded-lg text-xs text-slate-200"
                                   />
+                                  {historicalWorkers.length > 0 && (
+                                    <div className="flex flex-wrap gap-1 mt-1">
+                                      <span className="text-[9px] text-slate-500 self-center">Recientes:</span>
+                                      {historicalWorkers.slice(0, 3).map((wName) => (
+                                        <button
+                                          key={wName}
+                                          type="button"
+                                          onClick={() => updateWorker(mo.id, "nombre", wName)}
+                                          className="px-1.5 py-0.5 bg-slate-900 hover:bg-slate-800 text-[9px] text-slate-300 border border-slate-850 rounded hover:text-slate-100 transition-all"
+                                        >
+                                          {wName}
+                                        </button>
+                                      ))}
+                                    </div>
+                                  )}
                                 </div>
                                 <div className="md:col-span-2">
                                   <input
@@ -779,14 +901,47 @@ export default function NuevoReporte() {
                                   className={`p-3.5 rounded-xl bg-slate-950/60 border transition-all ${isJustificationMissing ? 'border-amber-900/60 bg-amber-950/5' : 'border-slate-900'} space-y-3`}
                                 >
                                   <div className="flex flex-wrap items-center gap-3">
-                                    <div className="flex-1 min-w-[200px]">
+                                    <div className="flex-1 min-w-[200px] space-y-1">
                                       <input
                                         type="text"
-                                        placeholder="Código / Descripción (Ej: Excavadora CAT-01)"
+                                        placeholder="Código / Descripción (Ej: CAT-02, EX-05)"
                                         value={maq.codigo}
                                         onChange={(e) => updateMachine(maq.id, "codigo", e.target.value)}
                                         className="w-full px-3 py-2 bg-slate-900 border border-slate-850 rounded-lg text-xs text-slate-200 font-medium"
                                       />
+                                      {/* Botones de sugerencias rápidas */}
+                                      <div className="flex flex-wrap gap-1 mt-1">
+                                        {/* Presets */}
+                                        {MAQUINARIA_PRESETS.slice(0, 3).map((pType) => (
+                                          <button
+                                            key={pType}
+                                            type="button"
+                                            onClick={() => {
+                                              const count = maquinaria.filter(m => m.codigo.startsWith(pType)).length + 1;
+                                              updateMachine(maq.id, "codigo", `${pType} #${count}`);
+                                            }}
+                                            className="px-1.5 py-0.5 bg-slate-900 hover:bg-slate-800 text-[9px] text-slate-400 border border-slate-850 rounded"
+                                          >
+                                            +{pType}
+                                          </button>
+                                        ))}
+                                        {/* Historial */}
+                                        {historicalMachines.length > 0 && (
+                                          <>
+                                            <span className="text-[9px] text-slate-700 self-center">|</span>
+                                            {historicalMachines.slice(0, 3).map((mCode) => (
+                                              <button
+                                                key={mCode}
+                                                type="button"
+                                                onClick={() => updateMachine(maq.id, "codigo", mCode)}
+                                                className="px-1.5 py-0.5 bg-indigo-950/30 hover:bg-indigo-900/30 text-[9px] text-indigo-400 border border-indigo-900/30 rounded"
+                                              >
+                                                {mCode}
+                                              </button>
+                                            ))}
+                                          </>
+                                        )}
+                                      </div>
                                     </div>
                                     <div className="flex items-center gap-2">
                                       <label className="text-[10px] text-slate-500 font-semibold uppercase">Op:</label>
@@ -822,21 +977,55 @@ export default function NuevoReporte() {
                                   </div>
 
                                   {needsJustification && (
-                                    <div className="space-y-1">
-                                      <label className="text-[10px] text-amber-300 font-semibold block">
-                                        * Justificación del tiempo en Standby (Obligatoria):
+                                    <div className="space-y-2 border-t border-slate-900/40 pt-2">
+                                      <label className="text-[10px] text-amber-300 font-bold block">
+                                        * Motivo del Standby (Selecciona una opción):
                                       </label>
-                                      <input
-                                        type="text"
-                                        placeholder="Escribe por qué la máquina estuvo parada (ej. Falla mecánica, falta de material)"
-                                        value={maq.justificacion || ""}
-                                        onChange={(e) => updateMachine(maq.id, "justificacion", e.target.value)}
-                                        className={`w-full px-3 py-1.5 bg-slate-900 border rounded-lg text-xs text-slate-200 focus:ring-1 transition-all ${
-                                          isJustificationMissing 
-                                            ? 'border-amber-850 focus:border-amber-500 focus:ring-amber-500' 
-                                            : 'border-slate-850 focus:border-indigo-500 focus:ring-indigo-500'
-                                        }`}
-                                      />
+                                      
+                                      <div className="flex flex-wrap gap-1">
+                                        {STANDBY_PRESETS.map((reason) => {
+                                          const isSelected = maq.justificacion === reason;
+                                          return (
+                                            <button
+                                              key={reason}
+                                              type="button"
+                                              onClick={() => updateMachine(maq.id, "justificacion", reason)}
+                                              className={`px-2 py-1 rounded text-[10px] border transition-all ${
+                                                isSelected
+                                                  ? 'border-amber-500 bg-amber-950/40 text-amber-300 font-bold'
+                                                  : 'border-slate-850 bg-slate-900/20 text-slate-400 hover:border-slate-700 hover:text-slate-350'
+                                              }`}
+                                            >
+                                              {reason}
+                                            </button>
+                                          );
+                                        })}
+                                        <button
+                                          type="button"
+                                          onClick={() => updateMachine(maq.id, "justificacion", "Otro")}
+                                          className={`px-2 py-1 rounded text-[10px] border transition-all ${
+                                            maq.justificacion === "Otro" || (!STANDBY_PRESETS.includes(maq.justificacion || "") && maq.justificacion !== "")
+                                              ? 'border-amber-500 bg-amber-950/40 text-amber-300 font-bold'
+                                              : 'border-slate-850 bg-slate-900/20 text-slate-400 hover:border-slate-700'
+                                          }`}
+                                        >
+                                          ✏️ Otro motivo
+                                        </button>
+                                      </div>
+
+                                      {(maq.justificacion === "Otro" || (!STANDBY_PRESETS.includes(maq.justificacion || "") && maq.justificacion !== "")) && (
+                                        <input
+                                          type="text"
+                                          placeholder="Escribe la justificación manualmente..."
+                                          value={maq.justificacion === "Otro" ? "" : maq.justificacion || ""}
+                                          onChange={(e) => updateMachine(maq.id, "justificacion", e.target.value)}
+                                          className={`w-full px-3 py-1.5 bg-slate-900 border rounded-lg text-xs text-slate-200 focus:ring-1 transition-all ${
+                                            isJustificationMissing 
+                                              ? 'border-amber-850 focus:border-amber-500 focus:ring-amber-500' 
+                                              : 'border-slate-850 focus:border-indigo-500 focus:ring-indigo-500'
+                                          }`}
+                                        />
+                                      )}
                                     </div>
                                   )}
                                 </div>
